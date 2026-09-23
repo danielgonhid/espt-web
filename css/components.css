@@ -106,3 +106,17 @@
   width: 100%;
   min-height: 380px;
 }
+
+/* ---------- Marca de la norma anti-Dani ----------
+   Asterisco que cuelga de una cifra (Victorias/Poles/VMR en la tabla)
+   cuando ese piloto tiene algo anulado por la norma. Es un <span title="…">:
+   el tooltip lo pone el navegador solo, esto es solo el aspecto.
+   Genérico a propósito por si otra página necesita el mismo marcador. */
+.marca-norma {
+  margin-left: 1px;
+  color: var(--c-rojo);
+  font-weight: 700;
+  cursor: help;
+  text-decoration: underline dotted var(--c-rojo);
+  text-underline-offset: 2px;
+}

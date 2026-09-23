@@ -17,7 +17,6 @@ function renderIdentidad(el, piloto) {
     <div class="identidad">
       <h1 class="identidad__nombre">${esc(piloto.nombre)}</h1>
       ${piloto.mote ? `<p class="identidad__mote">${esc(piloto.mote)}</p>` : ""}
-      <span class="etiqueta-campeonato">Campeonato ${esc(piloto.tipo_campeonato)}</span>
     </div>`;
 }
 
@@ -127,6 +126,7 @@ async function init() {
   zona.innerHTML = `
     <div id="p-identidad"></div>
     <div id="p-easter"></div>
+    <div id="p-norma"></div>
     <div class="rejilla-perfil">
       <div>
         <div id="p-fichas"></div>
@@ -143,6 +143,13 @@ async function init() {
   seccion("easter egg", $("p-easter"), async (el) => {
     const { htmlEasterEgg } = await import("../modulos/easter-eggs.js");
     el.innerHTML = htmlEasterEgg(piloto, datos.easter_eggs);
+  });
+
+  // Norma anti-Dani: la sección se pinta vacía sola si el piloto no tiene
+  // nada anulado (htmlNormaAntiDani devuelve "" en ese caso).
+  seccion("norma anti-Dani", $("p-norma"), async (el) => {
+    const { htmlNormaAntiDani } = await import("../modulos/norma-antidani.js");
+    el.innerHTML = htmlNormaAntiDani(piloto);
   });
 
   seccion("cifras del piloto", $("p-fichas"), (el) => renderFichas(el, piloto, pmTexto));

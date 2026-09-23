@@ -32,16 +32,6 @@
   margin: var(--e-1) 0 0;
 }
 
-.etiqueta-campeonato {
-  display: inline-block;
-  margin-top: var(--e-2);
-  padding: 2px var(--e-2);
-  font-size: var(--t-xs);
-  color: var(--c-texto-2);
-  border: 1px solid var(--c-linea);
-  border-radius: var(--radio);
-}
-
 /* ---------- Rejilla de cifras ---------- */
 .rejilla-datos {
   display: grid;
@@ -145,6 +135,37 @@
   font-size: var(--t-sm);
   color: var(--c-texto-2);
 }
+
+/* ---------- Norma anti-Dani ----------
+   Mismo lenguaje visual que .qpe (caja con borde izquierdo grueso en rojo):
+   es un aviso de reglamento, no lore, así que va sobrio y no lleva animación.
+   Solo aparece cuando el piloto tiene algo anulado (norma-antidani.js decide
+   eso; aquí solo se define el aspecto). */
+.norma-antidani {
+  margin: 0 0 var(--e-4);
+  padding: var(--e-3) var(--e-4);
+  background: var(--c-rojo-suave);
+  border: 1px solid var(--c-rojo);
+  border-left-width: 4px;
+  border-radius: var(--radio);
+}
+
+.norma-antidani__etiqueta {
+  margin: 0;
+  font-size: var(--t-xs);
+  color: var(--c-rojo);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.norma-antidani__texto {
+  margin-top: var(--e-2);
+  max-width: 60ch;
+  font-size: var(--t-sm);
+  line-height: 1.5;
+  color: var(--c-texto-2);
+}
+.norma-antidani__texto strong { color: var(--c-texto); font-weight: 400; }
 
 /* ---------- QPE ---------- */
 .qpe {

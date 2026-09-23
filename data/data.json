@@ -1,7 +1,7 @@
 {
   "meta": {
     "liga": "ESPT Competizione",
-    "generado": "2026-09-09",
+    "generado": "2026-09-23",
     "fuente": "estadisticas_liga(1).csv",
     "version_esquema": 1,
     "campos_pendientes": [
@@ -9,8 +9,8 @@
       "posicion_media: null, el CSV no la trae. La web muestra una estimacion marcada con * hasta que se rellene",
       "mejor_resultado / peor_resultado: null, se deduce una cota a partir de victorias y podios",
       "dnf: 0 para todos por indicacion del brief. El CSV solo trae DSQ y DNS",
-      "tipo_campeonato: 'Normal' para todos. Valores validos: Normal | Dobles | NASCAR",
-      "mejor_temporada: array vacio"
+      "mejor_temporada: array vacio",
+      "norma anti-Dani (Season 8): 'victorias_anuladas', 'poles_anuladas' y 'vmr_anuladas' guardan lo que Dani habria sumado de no ser por la norma; esos puntos ya estan sumados como oficiales al piloto que los hereda"
     ]
   },
   "easter_eggs": {
@@ -24,12 +24,12 @@
       "id": "marc",
       "nombre": "Marc",
       "mote": "",
-      "carreras": 206,
+      "carreras": 213,
       "titulos": 2,
-      "victorias": 38,
-      "podios": 139,
-      "poles": 21,
-      "vmr": 31,
+      "victorias": 39,
+      "podios": 146,
+      "poles": 22,
+      "vmr": 32,
       "dnf": 0,
       "dsq": 4,
       "dns": 2,
@@ -38,19 +38,18 @@
       "peor_resultado": null,
       "hasQPE": false,
       "qpeThanksTo": "",
-      "mejor_temporada": [],
-      "tipo_campeonato": "Normal"
+      "mejor_temporada": []
     },
     {
       "id": "enrique",
       "nombre": "Enrique",
       "mote": "",
-      "carreras": 138,
+      "carreras": 147,
       "titulos": 1,
-      "victorias": 17,
-      "podios": 70,
-      "poles": 10,
-      "vmr": 12,
+      "victorias": 22,
+      "podios": 78,
+      "poles": 13,
+      "vmr": 18,
       "dnf": 0,
       "dsq": 3,
       "dns": 1,
@@ -59,17 +58,16 @@
       "peor_resultado": null,
       "hasQPE": false,
       "qpeThanksTo": "",
-      "mejor_temporada": [],
-      "tipo_campeonato": "Normal"
+      "mejor_temporada": []
     },
     {
       "id": "dani",
       "nombre": "Dani",
       "mote": "",
-      "carreras": 137,
+      "carreras": 146,
       "titulos": 9,
       "victorias": 74,
-      "podios": 117,
+      "podios": 120,
       "poles": 74,
       "vmr": 93,
       "dnf": 0,
@@ -81,7 +79,9 @@
       "hasQPE": false,
       "qpeThanksTo": "",
       "mejor_temporada": [],
-      "tipo_campeonato": "Normal"
+      "victorias_anuladas": 3,
+      "poles_anuladas": 4,
+      "vmr_anuladas": 7
     },
     {
       "id": "epsi",
@@ -101,29 +101,27 @@
       "peor_resultado": null,
       "hasQPE": false,
       "qpeThanksTo": "",
-      "mejor_temporada": [],
-      "tipo_campeonato": "Normal"
+      "mejor_temporada": []
     },
     {
       "id": "donis",
       "nombre": "Donis",
       "mote": "",
-      "carreras": 100,
+      "carreras": 103,
       "titulos": 0,
-      "victorias": 7,
-      "podios": 32,
-      "poles": 4,
+      "victorias": 8,
+      "podios": 34,
+      "poles": 5,
       "vmr": 4,
       "dnf": 0,
-      "dsq": 0,
+      "dsq": 1,
       "dns": 1,
       "posicion_media": null,
       "mejor_resultado": null,
       "peor_resultado": null,
       "hasQPE": false,
       "qpeThanksTo": "",
-      "mejor_temporada": [],
-      "tipo_campeonato": "Normal"
+      "mejor_temporada": []
     },
     {
       "id": "ori",
@@ -143,17 +141,16 @@
       "peor_resultado": null,
       "hasQPE": false,
       "qpeThanksTo": "",
-      "mejor_temporada": [],
-      "tipo_campeonato": "Normal"
+      "mejor_temporada": []
     },
     {
       "id": "alberto",
       "nombre": "Alberto",
       "mote": "",
-      "carreras": 78,
+      "carreras": 82,
       "titulos": 0,
       "victorias": 0,
-      "podios": 19,
+      "podios": 21,
       "poles": 1,
       "vmr": 1,
       "dnf": 0,
@@ -164,19 +161,18 @@
       "peor_resultado": null,
       "hasQPE": false,
       "qpeThanksTo": "",
-      "mejor_temporada": [],
-      "tipo_campeonato": "Normal"
+      "mejor_temporada": []
     },
     {
       "id": "dlf",
       "nombre": "DLF",
       "mote": "",
-      "carreras": 72,
+      "carreras": 75,
       "titulos": 0,
-      "victorias": 6,
-      "podios": 32,
-      "poles": 3,
-      "vmr": 4,
+      "victorias": 7,
+      "podios": 34,
+      "poles": 4,
+      "vmr": 6,
       "dnf": 0,
       "dsq": 1,
       "dns": 1,
@@ -185,8 +181,7 @@
       "peor_resultado": null,
       "hasQPE": false,
       "qpeThanksTo": "",
-      "mejor_temporada": [],
-      "tipo_campeonato": "Normal"
+      "mejor_temporada": []
     },
     {
       "id": "raul",
@@ -206,8 +201,7 @@
       "peor_resultado": null,
       "hasQPE": false,
       "qpeThanksTo": "",
-      "mejor_temporada": [],
-      "tipo_campeonato": "Normal"
+      "mejor_temporada": []
     },
     {
       "id": "javito",
@@ -227,17 +221,16 @@
       "peor_resultado": null,
       "hasQPE": false,
       "qpeThanksTo": "",
-      "mejor_temporada": [],
-      "tipo_campeonato": "Normal"
+      "mejor_temporada": []
     },
     {
       "id": "sheila",
       "nombre": "Sheila",
       "mote": "",
-      "carreras": 43,
+      "carreras": 44,
       "titulos": 0,
       "victorias": 0,
-      "podios": 1,
+      "podios": 2,
       "poles": 0,
       "vmr": 0,
       "dnf": 0,
@@ -248,17 +241,16 @@
       "peor_resultado": null,
       "hasQPE": false,
       "qpeThanksTo": "",
-      "mejor_temporada": [],
-      "tipo_campeonato": "Normal"
+      "mejor_temporada": []
     },
     {
       "id": "alvaro",
       "nombre": "Álvaro",
       "mote": "",
-      "carreras": 42,
+      "carreras": 43,
       "titulos": 0,
-      "victorias": 3,
-      "podios": 11,
+      "victorias": 4,
+      "podios": 12,
       "poles": 2,
       "vmr": 1,
       "dnf": 0,
@@ -269,8 +261,7 @@
       "peor_resultado": null,
       "hasQPE": false,
       "qpeThanksTo": "",
-      "mejor_temporada": [],
-      "tipo_campeonato": "Normal"
+      "mejor_temporada": []
     },
     {
       "id": "navier",
@@ -290,8 +281,7 @@
       "peor_resultado": null,
       "hasQPE": false,
       "qpeThanksTo": "",
-      "mejor_temporada": [],
-      "tipo_campeonato": "Normal"
+      "mejor_temporada": []
     },
     {
       "id": "gentyk",
@@ -311,14 +301,13 @@
       "peor_resultado": null,
       "hasQPE": false,
       "qpeThanksTo": "",
-      "mejor_temporada": [],
-      "tipo_campeonato": "Normal"
+      "mejor_temporada": []
     },
     {
       "id": "miquel",
       "nombre": "Miquel",
       "mote": "",
-      "carreras": 29,
+      "carreras": 30,
       "titulos": 0,
       "victorias": 0,
       "podios": 5,
@@ -332,8 +321,7 @@
       "peor_resultado": null,
       "hasQPE": false,
       "qpeThanksTo": "",
-      "mejor_temporada": [],
-      "tipo_campeonato": "Normal"
+      "mejor_temporada": []
     },
     {
       "id": "prime",
@@ -353,8 +341,7 @@
       "peor_resultado": null,
       "hasQPE": false,
       "qpeThanksTo": "",
-      "mejor_temporada": [],
-      "tipo_campeonato": "Normal"
+      "mejor_temporada": []
     },
     {
       "id": "dave",
@@ -374,8 +361,7 @@
       "peor_resultado": null,
       "hasQPE": false,
       "qpeThanksTo": "",
-      "mejor_temporada": [],
-      "tipo_campeonato": "Normal"
+      "mejor_temporada": []
     },
     {
       "id": "hugo",
@@ -395,14 +381,13 @@
       "peor_resultado": null,
       "hasQPE": false,
       "qpeThanksTo": "",
-      "mejor_temporada": [],
-      "tipo_campeonato": "Normal"
+      "mejor_temporada": []
     },
     {
       "id": "toty",
       "nombre": "Toty",
       "mote": "",
-      "carreras": 20,
+      "carreras": 24,
       "titulos": 0,
       "victorias": 0,
       "podios": 2,
@@ -416,8 +401,7 @@
       "peor_resultado": null,
       "hasQPE": false,
       "qpeThanksTo": "",
-      "mejor_temporada": [],
-      "tipo_campeonato": "Normal"
+      "mejor_temporada": []
     },
     {
       "id": "jeshua",
@@ -437,8 +421,7 @@
       "peor_resultado": null,
       "hasQPE": false,
       "qpeThanksTo": "",
-      "mejor_temporada": [],
-      "tipo_campeonato": "Normal"
+      "mejor_temporada": []
     },
     {
       "id": "patatas",
@@ -458,8 +441,7 @@
       "peor_resultado": null,
       "hasQPE": false,
       "qpeThanksTo": "",
-      "mejor_temporada": [],
-      "tipo_campeonato": "Normal"
+      "mejor_temporada": []
     },
     {
       "id": "a-soler",
@@ -479,8 +461,7 @@
       "peor_resultado": null,
       "hasQPE": false,
       "qpeThanksTo": "",
-      "mejor_temporada": [],
-      "tipo_campeonato": "Normal"
+      "mejor_temporada": []
     },
     {
       "id": "l-gelardo",
@@ -500,14 +481,13 @@
       "peor_resultado": null,
       "hasQPE": false,
       "qpeThanksTo": "",
-      "mejor_temporada": [],
-      "tipo_campeonato": "Normal"
+      "mejor_temporada": []
     },
     {
       "id": "decathlon",
       "nombre": "Decathlon",
       "mote": "",
-      "carreras": 8,
+      "carreras": 9,
       "titulos": 0,
       "victorias": 2,
       "podios": 2,
@@ -521,8 +501,7 @@
       "peor_resultado": null,
       "hasQPE": false,
       "qpeThanksTo": "",
-      "mejor_temporada": [],
-      "tipo_campeonato": "Normal"
+      "mejor_temporada": []
     },
     {
       "id": "mario",
@@ -542,8 +521,7 @@
       "peor_resultado": null,
       "hasQPE": false,
       "qpeThanksTo": "",
-      "mejor_temporada": [],
-      "tipo_campeonato": "Normal"
+      "mejor_temporada": []
     },
     {
       "id": "femboy",
@@ -563,8 +541,7 @@
       "peor_resultado": null,
       "hasQPE": false,
       "qpeThanksTo": "",
-      "mejor_temporada": [],
-      "tipo_campeonato": "Normal"
+      "mejor_temporada": []
     },
     {
       "id": "pepaiz",
@@ -584,8 +561,7 @@
       "peor_resultado": null,
       "hasQPE": false,
       "qpeThanksTo": "",
-      "mejor_temporada": [],
-      "tipo_campeonato": "Normal"
+      "mejor_temporada": []
     },
     {
       "id": "david",
@@ -605,8 +581,7 @@
       "peor_resultado": null,
       "hasQPE": false,
       "qpeThanksTo": "",
-      "mejor_temporada": [],
-      "tipo_campeonato": "Normal"
+      "mejor_temporada": []
     },
     {
       "id": "roc",
@@ -626,8 +601,7 @@
       "peor_resultado": null,
       "hasQPE": false,
       "qpeThanksTo": "",
-      "mejor_temporada": [],
-      "tipo_campeonato": "Normal"
+      "mejor_temporada": []
     },
     {
       "id": "diego",
@@ -647,8 +621,7 @@
       "peor_resultado": null,
       "hasQPE": false,
       "qpeThanksTo": "",
-      "mejor_temporada": [],
-      "tipo_campeonato": "Normal"
+      "mejor_temporada": []
     },
     {
       "id": "hachimi",
@@ -668,8 +641,7 @@
       "peor_resultado": null,
       "hasQPE": false,
       "qpeThanksTo": "",
-      "mejor_temporada": [],
-      "tipo_campeonato": "Normal"
+      "mejor_temporada": []
     },
     {
       "id": "paula",
@@ -689,8 +661,7 @@
       "peor_resultado": null,
       "hasQPE": false,
       "qpeThanksTo": "",
-      "mejor_temporada": [],
-      "tipo_campeonato": "Normal"
+      "mejor_temporada": []
     },
     {
       "id": "killian",
@@ -710,8 +681,7 @@
       "peor_resultado": null,
       "hasQPE": false,
       "qpeThanksTo": "",
-      "mejor_temporada": [],
-      "tipo_campeonato": "Normal"
+      "mejor_temporada": []
     },
     {
       "id": "constans",
@@ -731,8 +701,7 @@
       "peor_resultado": null,
       "hasQPE": false,
       "qpeThanksTo": "",
-      "mejor_temporada": [],
-      "tipo_campeonato": "Normal"
+      "mejor_temporada": []
     },
     {
       "id": "m-lorenzo",
@@ -752,8 +721,7 @@
       "peor_resultado": null,
       "hasQPE": false,
       "qpeThanksTo": "",
-      "mejor_temporada": [],
-      "tipo_campeonato": "Normal"
+      "mejor_temporada": []
     },
     {
       "id": "lautaro",
@@ -773,8 +741,7 @@
       "peor_resultado": null,
       "hasQPE": false,
       "qpeThanksTo": "",
-      "mejor_temporada": [],
-      "tipo_campeonato": "Normal"
+      "mejor_temporada": []
     },
     {
       "id": "kio",
@@ -794,8 +761,7 @@
       "peor_resultado": null,
       "hasQPE": false,
       "qpeThanksTo": "",
-      "mejor_temporada": [],
-      "tipo_campeonato": "Normal"
+      "mejor_temporada": []
     },
     {
       "id": "adam",
@@ -815,8 +781,7 @@
       "peor_resultado": null,
       "hasQPE": false,
       "qpeThanksTo": "",
-      "mejor_temporada": [],
-      "tipo_campeonato": "Normal"
+      "mejor_temporada": []
     },
     {
       "id": "butterpro",
@@ -836,8 +801,7 @@
       "peor_resultado": null,
       "hasQPE": false,
       "qpeThanksTo": "",
-      "mejor_temporada": [],
-      "tipo_campeonato": "Normal"
+      "mejor_temporada": []
     },
     {
       "id": "koman",
@@ -857,8 +821,7 @@
       "peor_resultado": null,
       "hasQPE": false,
       "qpeThanksTo": "",
-      "mejor_temporada": [],
-      "tipo_campeonato": "Normal"
+      "mejor_temporada": []
     },
     {
       "id": "skyten",
@@ -878,8 +841,7 @@
       "peor_resultado": null,
       "hasQPE": false,
       "qpeThanksTo": "",
-      "mejor_temporada": [],
-      "tipo_campeonato": "Normal"
+      "mejor_temporada": []
     },
     {
       "id": "munti",
@@ -899,8 +861,7 @@
       "peor_resultado": null,
       "hasQPE": false,
       "qpeThanksTo": "",
-      "mejor_temporada": [],
-      "tipo_campeonato": "Normal"
+      "mejor_temporada": []
     },
     {
       "id": "lucas",
@@ -920,8 +881,7 @@
       "peor_resultado": null,
       "hasQPE": false,
       "qpeThanksTo": "",
-      "mejor_temporada": [],
-      "tipo_campeonato": "Normal"
+      "mejor_temporada": []
     },
     {
       "id": "iniesta",
@@ -941,8 +901,7 @@
       "peor_resultado": null,
       "hasQPE": false,
       "qpeThanksTo": "",
-      "mejor_temporada": [],
-      "tipo_campeonato": "Normal"
+      "mejor_temporada": []
     },
     {
       "id": "bryan",
@@ -962,8 +921,7 @@
       "peor_resultado": null,
       "hasQPE": false,
       "qpeThanksTo": "",
-      "mejor_temporada": [],
-      "tipo_campeonato": "Normal"
+      "mejor_temporada": []
     },
     {
       "id": "francel",
@@ -983,8 +941,7 @@
       "peor_resultado": null,
       "hasQPE": false,
       "qpeThanksTo": "",
-      "mejor_temporada": [],
-      "tipo_campeonato": "Normal"
+      "mejor_temporada": []
     },
     {
       "id": "maxipan",
@@ -1004,8 +961,7 @@
       "peor_resultado": null,
       "hasQPE": false,
       "qpeThanksTo": "",
-      "mejor_temporada": [],
-      "tipo_campeonato": "Normal"
+      "mejor_temporada": []
     },
     {
       "id": "bernat",
@@ -1025,8 +981,7 @@
       "peor_resultado": null,
       "hasQPE": false,
       "qpeThanksTo": "",
-      "mejor_temporada": [],
-      "tipo_campeonato": "Normal"
+      "mejor_temporada": []
     },
     {
       "id": "aisueja",
@@ -1046,8 +1001,7 @@
       "peor_resultado": null,
       "hasQPE": false,
       "qpeThanksTo": "",
-      "mejor_temporada": [],
-      "tipo_campeonato": "Normal"
+      "mejor_temporada": []
     },
     {
       "id": "guillem",
@@ -1067,8 +1021,7 @@
       "peor_resultado": null,
       "hasQPE": false,
       "qpeThanksTo": "",
-      "mejor_temporada": [],
-      "tipo_campeonato": "Normal"
+      "mejor_temporada": []
     },
     {
       "id": "lu",
@@ -1088,8 +1041,7 @@
       "peor_resultado": null,
       "hasQPE": false,
       "qpeThanksTo": "",
-      "mejor_temporada": [],
-      "tipo_campeonato": "Normal"
+      "mejor_temporada": []
     },
     {
       "id": "adri",
@@ -1109,8 +1061,7 @@
       "peor_resultado": null,
       "hasQPE": false,
       "qpeThanksTo": "",
-      "mejor_temporada": [],
-      "tipo_campeonato": "Normal"
+      "mejor_temporada": []
     },
     {
       "id": "dgt",
@@ -1130,8 +1081,7 @@
       "peor_resultado": null,
       "hasQPE": false,
       "qpeThanksTo": "",
-      "mejor_temporada": [],
-      "tipo_campeonato": "Normal"
+      "mejor_temporada": []
     },
     {
       "id": "el-gravas",
@@ -1151,8 +1101,7 @@
       "peor_resultado": null,
       "hasQPE": false,
       "qpeThanksTo": "",
-      "mejor_temporada": [],
-      "tipo_campeonato": "Normal"
+      "mejor_temporada": []
     },
     {
       "id": "frostex",
@@ -1172,8 +1121,7 @@
       "peor_resultado": null,
       "hasQPE": false,
       "qpeThanksTo": "",
-      "mejor_temporada": [],
-      "tipo_campeonato": "Normal"
+      "mejor_temporada": []
     },
     {
       "id": "gabrolon",
@@ -1193,8 +1141,7 @@
       "peor_resultado": null,
       "hasQPE": false,
       "qpeThanksTo": "",
-      "mejor_temporada": [],
-      "tipo_campeonato": "Normal"
+      "mejor_temporada": []
     },
     {
       "id": "jazz",
@@ -1214,8 +1161,7 @@
       "peor_resultado": null,
       "hasQPE": false,
       "qpeThanksTo": "",
-      "mejor_temporada": [],
-      "tipo_campeonato": "Normal"
+      "mejor_temporada": []
     },
     {
       "id": "nohaygrava",
@@ -1235,8 +1181,7 @@
       "peor_resultado": null,
       "hasQPE": false,
       "qpeThanksTo": "",
-      "mejor_temporada": [],
-      "tipo_campeonato": "Normal"
+      "mejor_temporada": []
     },
     {
       "id": "p-perez",
@@ -1256,8 +1201,7 @@
       "peor_resultado": null,
       "hasQPE": false,
       "qpeThanksTo": "",
-      "mejor_temporada": [],
-      "tipo_campeonato": "Normal"
+      "mejor_temporada": []
     },
     {
       "id": "roman",
@@ -1277,8 +1221,7 @@
       "peor_resultado": null,
       "hasQPE": false,
       "qpeThanksTo": "",
-      "mejor_temporada": [],
-      "tipo_campeonato": "Normal"
+      "mejor_temporada": []
     },
     {
       "id": "sote",
@@ -1298,8 +1241,7 @@
       "peor_resultado": null,
       "hasQPE": false,
       "qpeThanksTo": "",
-      "mejor_temporada": [],
-      "tipo_campeonato": "Normal"
+      "mejor_temporada": []
     },
     {
       "id": "spoty",
@@ -1319,8 +1261,7 @@
       "peor_resultado": null,
       "hasQPE": false,
       "qpeThanksTo": "",
-      "mejor_temporada": [],
-      "tipo_campeonato": "Normal"
+      "mejor_temporada": []
     },
     {
       "id": "thiago",
@@ -1340,8 +1281,7 @@
       "peor_resultado": null,
       "hasQPE": false,
       "qpeThanksTo": "",
-      "mejor_temporada": [],
-      "tipo_campeonato": "Normal"
+      "mejor_temporada": []
     },
     {
       "id": "v-pascual",
@@ -1361,8 +1301,27 @@
       "peor_resultado": null,
       "hasQPE": false,
       "qpeThanksTo": "",
-      "mejor_temporada": [],
-      "tipo_campeonato": "Normal"
+      "mejor_temporada": []
+    },
+    {
+      "id": "sprite",
+      "nombre": "Sprite",
+      "mote": "",
+      "carreras": 1,
+      "titulos": 0,
+      "victorias": 0,
+      "podios": 0,
+      "poles": 0,
+      "vmr": 0,
+      "dnf": 0,
+      "dsq": 0,
+      "dns": 0,
+      "posicion_media": null,
+      "mejor_resultado": null,
+      "peor_resultado": null,
+      "hasQPE": false,
+      "qpeThanksTo": "",
+      "mejor_temporada": []
     }
   ]
 }

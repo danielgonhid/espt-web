@@ -3,6 +3,12 @@
    Tabla de clasificación ordenable + buscador (index.html).
    Para añadir una columna: una entrada en COLUMNAS y su <td>
    en filaHTML().
+
+   Norma anti-Dani: si un piloto tiene algo anulado (campos
+   *_anuladas en data.json), su cifra oficial de Victorias/Poles/VMR
+   lleva un asterisco con tooltip explicando cuánto le anularon. La
+   cifra en sí ya es la oficial (no incluye lo anulado); el asterisco
+   es solo un aviso visual, no cambia el orden de la tabla.
    ========================================================= */
 
 import { posicionMedia } from "../core/metricas.js";
@@ -25,6 +31,18 @@ const COLUMNAS = [
   { clave: "posMedia",  texto: "Pos. media", tipo: "num",    get: (p) => posicionMedia(p).valor ?? Infinity }
 ];
 
+/**
+ * Cifra oficial + asterisco con tooltip si el piloto tiene algo
+ * anulado por la norma anti-Dani en ese campo. `anulados` es el
+ * número de victorias/poles/vmr que no cuentan; `etiqueta` es el
+ * texto del tooltip en singular (se pluraliza solo).
+ */
+function conMarcaNorma(valorOficial, anulados, etiqueta) {
+  if (!anulados) return String(valorOficial);
+  const texto = `${anulados} ${etiqueta}${anulados === 1 ? "" : "s"} anulada${anulados === 1 ? "" : "s"} por la norma anti-Dani`;
+  return `${valorOficial}<span class="marca-norma" title="${esc(texto)}" aria-label="${esc(texto)}">*</span>`;
+}
+
 function filaHTML(p, i) {
   const pm = posicionMedia(p);
   const pmTexto = pm.valor === null ? "—" : `${fmtNum(pm.valor)}${pm.estimada ? "*" : ""}`;
@@ -37,10 +55,10 @@ function filaHTML(p, i) {
       </td>
       <td class="numeros dato-fuerte">${p.carreras}</td>
       <td class="numeros ${p.titulos ? "dato-titulos" : ""}">${p.titulos}</td>
-      <td class="numeros dato-fuerte">${p.victorias}</td>
+      <td class="numeros dato-fuerte">${conMarcaNorma(p.victorias, p.victorias_anuladas, "victoria")}</td>
       <td class="numeros">${p.podios}</td>
-      <td class="numeros">${p.poles}</td>
-      <td class="numeros">${p.vmr}</td>
+      <td class="numeros">${conMarcaNorma(p.poles, p.poles_anuladas, "pole")}</td>
+      <td class="numeros">${conMarcaNorma(p.vmr, p.vmr_anuladas, "vuelta rápida")}</td>
       <td class="numeros">${p.dnf}</td>
       <td class="numeros">${p.dsq}</td>
       <td class="numeros">${fmtPct(pct(p.victorias, p.carreras))}</td>
