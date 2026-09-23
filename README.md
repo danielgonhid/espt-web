@@ -1,126 +1,111 @@
-# ESPT Competizione — estadísticas históricas
+# ESPT Competizione — Web de estadísticas
 
-Web estática (MPA) en HTML5 + CSS3 + Vanilla JS con módulos ES. Gráficos con Chart.js 4 desde CDN.
-Todos los datos salen de `data/data.json`. No hay ni un dato de piloto escrito en el HTML.
+Web de estadísticas históricas de **ESPT Competizione**, una liga privada de simracing en
+Assetto Corsa. Reúne los datos de los 64 pilotos que han pasado por la liga y permite
+consultarlos, ver la ficha de cada uno y enfrentarlos entre sí.
+
+**Stack:** HTML5 · CSS3 (variables nativas) · JavaScript ES6+ con módulos nativos · Chart.js.
+Sin frameworks, sin backend y sin paso de compilación.
+
+> Demo: *pendiente de despliegue en Cloudflare Pages*
+
+## Qué hace
+
+- **Clasificación histórica.** Tabla de todos los pilotos, ordenable por cualquier columna
+  y con buscador. Incluye totales de la liga y una sección de récords (más títulos, más
+  experiencia, mejor posición media…) calculados al vuelo, con soporte para empates.
+- **Perfil de piloto.** Ficha individual con sus cifras, ratios y un gráfico hexagonal que
+  compara su rendimiento con el mejor registro de la liga en seis ejes.
+- **Cara a cara.** Comparador de dos pilotos métrica a métrica, con el ganador de cada una
+  resaltado y los dos perfiles superpuestos en el gráfico. También calcula el duelo más
+  igualado de la liga: la pareja de pilotos cuyos perfiles estadísticos están más cerca
+  (distancia euclídea sobre cinco ratios normalizados).
+
+La navegación entre páginas pasa el estado por la URL (`perfil.html?piloto=Marc`,
+`cara-a-cara.html?a=Marc&b=Dani`), así que cualquier vista se puede compartir con un enlace.
+
+## Decisiones técnicas
+
+**Web estática con datos dinámicos.** Todo sale de un único `data/data.json`; el HTML no
+lleva ni un dato escrito. Para actualizar la liga basta con cambiar ese archivo y hacer
+push: el hosting redespliega solo. Una liga que actualiza resultados una vez por semana no
+necesita servidor ni base de datos.
+
+**Diseño en un solo archivo.** Colores, tipografía, tamaños y espaciados están definidos
+como variables en `css/tokens.css`. Los tonos derivados (brillos, fondos translúcidos) se
+calculan con `color-mix()` a partir del color base, y los gráficos leen esas mismas
+variables en tiempo de ejecución. Cambiar el color de la liga es cambiar una línea.
+
+**Los fallos no se propagan.** Cada página carga solo su propio módulo, la cabecera va en
+un módulo aparte y cada sección se pinta aislada: si una lanza un error (incluso de
+sintaxis, porque se cargan con `import()` dinámico), se sustituye por un aviso y el resto
+de la página sigue funcionando.
+
+**Datos tratados como no fiables.** Todo texto del JSON se escapa antes de insertarse en
+el HTML. Hoy el JSON lo editamos nosotros, pero si en el futuro los resultados se importan
+del servidor de juego, los nombres de piloto los elige cada jugador.
+
+**Gráficos sin fugas.** Antes de dibujar, se destruye la instancia previa de Chart.js en
+ese canvas y se espera a que el canvas sea visible, para evitar gráficos duplicados o de
+tamaño cero.
 
 ## Estructura
 
 ```
 /
 ├── index.html               Clasificación
-├── perfil.html              Ficha individual  (?piloto=Marc)
-├── cara-a-cara.html         Comparador H2H    (?a=Marc&b=Dani)
-├── data/
-│   └── data.json            64 pilotos, generado desde estadisticas_liga(1).csv
+├── perfil.html              Ficha individual
+├── cara-a-cara.html         Comparador
+├── data/data.json           Fuente única de datos
 ├── css/
-│   ├── tokens.css           Colores, fuente, tamaños, espaciado. ÚNICO sitio con valores
-│   ├── base.css             Reset, estructura de página, avisos
-│   ├── layout.css           Cabecera, logo, navegación, pie
-│   ├── components.css       Piezas compartidas: controles, botones, tarjetas
-│   └── pages/               Estilos que solo usa una página
-│       ├── index.css
-│       ├── perfil.css
-│       └── cara-a-cara.css
+│   ├── tokens.css           Colores, fuente, tamaños, espaciado
+│   ├── base.css             Reset y estructura común
+│   ├── layout.css           Cabecera y pie
+│   ├── components.css       Piezas compartidas
+│   └── pages/               Estilos exclusivos de cada página
 └── js/
-    ├── core/                Compartido por todas las páginas
-    │   ├── config.js        Constantes ajustables y enlaces del menú
-    │   ├── data.js          Único punto que lee data.json
-    │   ├── utils.js         Formato, URL, búsqueda (sin DOM)
-    │   ├── metricas.js      Estadística de la liga (sin DOM)
-    │   ├── ui.js            seccion(), avisos de error, selects
-    │   └── layout.js        Pinta cabecera y pie en las tres páginas
+    ├── core/                Carga de datos, métricas, utilidades, layout
     ├── charts.js            Único fichero que toca Chart.js
     ├── modulos/             Secciones que se cargan bajo demanda
-    │   ├── totales.js
-    │   ├── records.js
-    │   ├── tabla.js
-    │   └── easter-eggs.js
     └── pages/               Un orquestador por página
-        ├── index.js
-        ├── perfil.js
-        └── cara-a-cara.js
 ```
 
 ## Qué toco para cambiar…
 
-| Quiero cambiar…                              | Archivo                    |
-|----------------------------------------------|----------------------------|
-| Un color, la fuente, un tamaño               | `css/tokens.css` (gráficos incluidos) |
-| El logo o el menú                            | `js/core/layout.js`, `js/core/config.js` |
-| Añadir una página al menú                    | `ENLACES_NAV` en `js/core/config.js` |
-| Mínimos de carreras, estimación de pos. media | `js/core/config.js`       |
-| Un récord de la portada                      | `js/modulos/records.js`    |
-| Una columna de la tabla                      | `js/modulos/tabla.js`      |
-| Una métrica del cara a cara                  | `METRICAS_H2H` en `js/pages/cara-a-cara.js` |
-| Un easter egg                                | bloque `easter_eggs` de `data/data.json` (clave = id del piloto) |
-| El formato del JSON                          | `js/core/data.js` (el resto no se entera) |
+| Quiero cambiar…                          | Archivo |
+|------------------------------------------|---------|
+| Un color, la fuente, un tamaño           | `css/tokens.css` (gráficos incluidos) |
+| El logo o el menú                        | `js/core/layout.js`, `ENLACES_NAV` en `js/core/config.js` |
+| Mínimos de carreras y otras constantes   | `js/core/config.js` |
+| Un récord de la portada                  | `js/modulos/records.js` |
+| Una columna de la tabla                  | `js/modulos/tabla.js` |
+| Una métrica del cara a cara              | `METRICAS_H2H` en `js/pages/cara-a-cara.js` |
+| Un easter egg                            | bloque `easter_eggs` de `data/data.json` (clave = id del piloto) |
+| El formato del JSON                      | `js/core/data.js` (el resto de la web no se entera) |
 
-Los colores derivados (brillos, fondos translúcidos, hover de filas) se calculan con
-`color-mix()` a partir del color base. Cambias `--c-rojo` y todas sus variantes cambian solas.
-`charts.js` lee los tokens con `getComputedStyle` al dibujar, así que tampoco hay que tocarlo.
+Regla al añadir código: todo dato del JSON que vaya dentro de una plantilla HTML se
+escribe como `${esc(dato)}`. En `textContent`, `document.title` o gráficos no se usa.
 
-## Si algo se rompe, se rompe solo eso
+## Ejecutar en local
 
-Tres capas de aislamiento:
+No abras los HTML con doble clic: con `file://` el navegador bloquea `fetch()` y los
+módulos ES, y la web se queda vacía. Sírvela por HTTP, por ejemplo con la extensión
+**Live Server** de VS Code (clic derecho sobre `index.html` → *Open with Live Server*).
 
-1. **Un script por página.** Un error en `cara-a-cara.js` no afecta a la clasificación ni al perfil.
-2. **La cabecera va aparte.** `layout.js` se carga con su propio `<script type="module">`:
-   aunque el script de la página falle, el logo y el menú salen y se puede navegar.
-3. **Cada sección pasa por `seccion()`** (`js/core/ui.js`). Si lanza un error, esa caja se
-   sustituye por un aviso y el resto de la página sigue. Los módulos de `js/modulos/` y
-   `charts.js` se cargan con `import()` dinámico dentro de `seccion()`, así que ni siquiera
-   un error de **sintaxis** en uno de ellos tumba la página.
+## Flujo de trabajo
 
-El límite: `js/core/` lo comparten todas las páginas. Si se rompe `data.js` o `utils.js`,
-se caen las tres. Por eso `core` es pequeño y conviene tocarlo solo en la rama `dev`.
-
-Comprobado en Chrome rompiendo a propósito `records.js` (la tabla sigue), `charts.js`
-(las cifras del perfil siguen), `cara-a-cara.js` (la cabecera sigue) y con el CDN de
-Chart.js caído (sale un aviso en el hueco del gráfico).
-
-## Seguridad: esc() en todo dato del JSON
-
-Las plantillas usan `innerHTML`. Todo texto que venga de `data.json` (nombres, motes,
-easter eggs…) pasa por `esc()` de `js/core/utils.js`, que convierte `< > & " '` en
-entidades HTML. Hoy el JSON lo editamos nosotros, pero si los resultados llegan del
-servidor de Assetto Corsa, los nombres son los de Steam y cualquiera podría llamarse
-`<img src=x onerror=...>`. Probado: un piloto con ese nombre sale como texto.
-
-Regla al añadir código: dato del JSON dentro de una plantilla HTML → `${esc(dato)}`.
-No se usa en `textContent`, `document.title` ni en los gráficos (ahí saldría `&amp;`).
-
-## Arrancar en local
-
-No abras los HTML con doble clic. Con `file://` el navegador bloquea tanto `fetch()` como
-los módulos ES, y la web se queda vacía.
-
-Usa **Live Server** en VS Code: clic derecho sobre `index.html` → *Open with Live Server*.
-
-## Flujo de trabajo con Git
-
-- `main` = producción. Lo que hay aquí es lo que se publica.
-- `dev` = pruebas. Todo cambio se hace aquí primero.
-
-```
-git switch dev
-# ...cambios, probar con Live Server...
-git add -A
-git commit -m "Descripción del cambio"
-git push
-
-# Cuando esté probado:
-git switch main
-git merge dev
-git push
-```
-
-## La fuente
-
-Accelerator W01 se carga por CDN desde el `@import` de la primera línea de `css/tokens.css`.
-Sin conexión, o si el CDN cae, la web usa el `sans-serif` del sistema.
+- `main`: producción. Es lo que se publica.
+- `dev`: desarrollo. Todo cambio se prueba aquí antes de pasar a `main`.
 
 ## Notas de los datos
 
+- Los datos históricos vienen de la hoja de estadísticas de la liga, convertida a JSON.
 - Los podios incluyen las victorias.
-- Los porcentajes se calculan sobre `carreras`; con 0 carreras dan 0, nunca `NaN`.
-- La posición media es estimada (marcada con `*`) mientras el JSON traiga `posicion_media: null`.
+- La posición media se estima (y se marca con `*`) mientras el origen no traiga esa columna.
+- La tipografía Accelerator W01 se carga por CDN; sin conexión se usa la sans-serif del sistema.
+
+## Autoría
+
+Proyecto de **Daniel González Hidalgo** ([@danielgonhid](https://github.com/danielgonhid)),
+estudiante de ASIR. Desarrollado con asistencia de IA; los requisitos, la arquitectura, la
+revisión del código y el despliegue son míos.
