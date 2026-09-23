@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Clasificación histórica — ESPT Competizione</title>
+  <meta name="description" content="Estadísticas históricas de todos los pilotos de la liga ESPT Competizione.">
+
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages/index.css">
+
+  <!-- Dos módulos separados: si el de la página falla, la cabecera sale igual -->
+  <script type="module" src="js/core/layout.js"></script>
+  <script type="module" src="js/pages/index.js"></script>
+</head>
+<body>
+
+  <header class="cabecera" id="cabecera"></header>
+
+  <main class="principal">
+    <div class="contenedor">
+
+      <noscript>
+        <div class="aviso">Esta web necesita JavaScript activado para mostrar las estadísticas.</div>
+      </noscript>
+
+      <h1 class="titulo-vista">Histórico de la liga</h1>
+      <p class="subtitulo-vista">
+        Todo lo que ha pasado en ESPT desde el primer campeonato. Ordena por cualquier
+        columna pulsando su cabecera y busca por nombre o mote.
+      </p>
+
+      <section class="tira" id="tira-totales" aria-label="Totales de la liga"></section>
+
+      <section aria-labelledby="titulo-records">
+        <h2 class="titulo-seccion" id="titulo-records">Récords y estadísticas destacadas</h2>
+        <div class="highlights-grid" id="highlights">
+          <p class="cargando">Calculando récords…</p>
+        </div>
+      </section>
+
+      <div class="controles">
+        <div class="campo">
+          <label class="campo__etiqueta" for="buscador">Buscar piloto</label>
+          <input class="entrada" id="buscador" type="search" autocomplete="off"
+                 placeholder="Nombre o mote…">
+        </div>
+        <span class="recuento" id="recuento">Cargando…</span>
+      </div>
+
+      <div id="zona-tabla">
+        <div class="table-responsive">
+          <table class="tabla" id="tabla-pilotos">
+            <caption class="oculto">Clasificación histórica de pilotos</caption>
+            <thead><tr id="cabecera-tabla"></tr></thead>
+            <tbody id="cuerpo-tabla">
+              <tr><td class="cargando" colspan="14">Cargando datos…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <p class="nota">
+        Los podios incluyen las victorias. Un asterisco en la posición media indica
+        que es un valor estimado: el CSV de origen no trae esa columna.
+      </p>
+
+    </div>
+  </main>
+
+  <footer class="pie" id="pie"></footer>
+
+</body>
+</html>

@@ -1,0 +1,89 @@
+/* =========================================================
+   ESPT Competizione — layout.css
+   Cabecera (logo + navegación) y pie. Los pinta js/core/layout.js
+   en las tres páginas: un solo HTML para toda la web.
+   ========================================================= */
+
+.cabecera {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: linear-gradient(180deg, var(--c-pista) 0%, var(--c-asfalto) 100%);
+  border-bottom: 1px solid var(--c-linea);
+}
+
+/* Reserva el alto mientras layout.js pinta la cabecera:
+   evita que la página dé un salto al cargar. */
+.cabecera:empty { min-height: 77px; }
+
+.cabecera__fila {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--e-4);
+  min-height: 76px;
+  flex-wrap: wrap;
+  padding: var(--e-2) var(--e-3);
+}
+
+/* ---------- Logo ---------- */
+.logo {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--e-2);
+  line-height: 1;
+  color: var(--c-texto);
+}
+.logo:hover { text-decoration: none; }
+
+.logo__espt {
+  font-size: var(--t-2xl);
+  color: var(--c-rojo);
+  letter-spacing: -0.02em;
+  text-shadow: 0 0 24px var(--c-rojo-glow);
+}
+
+.logo__competizione {
+  font-size: var(--t-lg);
+  color: var(--c-texto);
+  letter-spacing: 0.04em;
+}
+
+/* ---------- Navegación ---------- */
+.nav {
+  display: flex;
+  gap: var(--e-1);
+  flex-wrap: wrap;
+}
+
+.nav__enlace {
+  display: inline-block;
+  padding: var(--e-2) var(--e-3);
+  color: var(--c-texto-2);
+  border: 1px solid transparent;
+  border-radius: var(--radio);
+  font-size: var(--t-sm);
+}
+.nav__enlace:hover {
+  color: var(--c-texto);
+  border-color: var(--c-linea);
+  background: var(--c-asfalto-alto);
+  text-decoration: none;
+}
+.nav__enlace[aria-current="page"] {
+  color: var(--c-texto);
+  border-color: var(--c-rojo);
+  background: var(--c-rojo-suave);
+}
+
+/* ---------- Pie ---------- */
+.pie {
+  border-top: 1px solid var(--c-linea);
+  padding: var(--e-4) 0;
+  color: var(--c-texto-3);
+  font-size: var(--t-xs);
+}
+
+@media (max-width: 560px) {
+  .cabecera__fila { min-height: 0; }
+}

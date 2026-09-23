@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Perfil de piloto — ESPT Competizione</title>
+
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages/perfil.css">
+
+  <!-- Chart.js como global: lo usa js/charts.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" defer></script>
+  <script type="module" src="js/core/layout.js"></script>
+  <script type="module" src="js/pages/perfil.js"></script>
+</head>
+<body>
+
+  <header class="cabecera" id="cabecera"></header>
+
+  <main class="principal">
+    <div class="contenedor">
+
+      <noscript>
+        <div class="aviso">Esta web necesita JavaScript activado para mostrar las estadísticas.</div>
+      </noscript>
+
+      <div class="controles">
+        <div class="campo">
+          <label class="campo__etiqueta" for="selector-piloto">Cambiar de piloto</label>
+          <select class="selector" id="selector-piloto">
+            <option value="">Cargando…</option>
+          </select>
+        </div>
+        <a class="boton boton--fantasma" href="index.html"><span>Volver a la clasificación</span></a>
+      </div>
+
+      <section id="zona-perfil">
+        <p class="cargando">Cargando piloto…</p>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="pie" id="pie"></footer>
+
+</body>
+</html>

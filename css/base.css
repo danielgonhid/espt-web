@@ -1,0 +1,99 @@
+/* =========================================================
+   ESPT Competizione — base.css
+   Reset, elementos HTML sueltos, estructura de página y
+   estados comunes (cargando, avisos). Sin componentes.
+   ========================================================= */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--c-pista);
+  color: var(--c-texto);
+  font-family: var(--f-base);
+  font-size: var(--t-md);
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+  /* Accelerator W01 es más ancha que una sans normal: sin esto, una palabra
+     larga o una cifra grande empuja el contenedor y rompe la rejilla. */
+  overflow-wrap: break-word;
+}
+
+canvas { max-width: 100%; }
+
+img { max-width: 100%; display: block; }
+
+a { color: var(--c-rojo); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+:focus-visible {
+  outline: 2px solid var(--c-rojo);
+  outline-offset: 2px;
+}
+
+/* ---------- Estructura ---------- */
+.contenedor {
+  width: 100%;
+  max-width: var(--ancho);
+  margin: 0 auto;
+  padding: 0 var(--e-3);
+}
+
+.principal { padding: var(--e-5) 0 var(--e-6); }
+
+.titulo-vista {
+  font-size: var(--t-xl);
+  margin: 0 0 var(--e-1);
+  line-height: 1.1;
+}
+
+.subtitulo-vista {
+  margin: 0 0 var(--e-4);
+  color: var(--c-texto-2);
+  font-size: var(--t-sm);
+  max-width: 66ch;
+}
+
+.numeros { font-variant-numeric: tabular-nums; font-feature-settings: "tnum" 1; }
+
+.nota {
+  margin-top: var(--e-3);
+  font-size: var(--t-xs);
+  color: var(--c-texto-3);
+  line-height: 1.6;
+}
+
+/* ---------- Estados ---------- */
+.aviso {
+  padding: var(--e-4);
+  border: 1px solid var(--c-rojo);
+  border-left-width: 4px;
+  background: var(--c-rojo-suave);
+  color: var(--c-texto);
+  border-radius: var(--radio);
+}
+.aviso p { margin: 0 0 var(--e-2); }
+.aviso p:last-child { margin-bottom: 0; }
+
+.aviso code {
+  background: var(--c-pista);
+  padding: 1px 5px;
+  border-radius: var(--radio);
+  color: var(--c-texto-2);
+}
+
+/* Aviso de una sección que ha fallado: más discreto que un error de página. */
+.aviso--seccion {
+  padding: var(--e-3);
+  font-size: var(--t-sm);
+}
+
+.cargando { color: var(--c-texto-2); padding: var(--e-4) 0; }
+
+.oculto { display: none !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}

@@ -1,0 +1,169 @@
+/* =========================================================
+   ESPT Competizione — pages/perfil.css
+   Solo la ficha individual del piloto.
+   ========================================================= */
+
+.rejilla-perfil {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 520px);
+  gap: var(--e-4);
+  align-items: start;
+}
+.rejilla-perfil > * { min-width: 0; }
+
+/* ---------- Identidad ---------- */
+.identidad {
+  border-left: 4px solid var(--c-rojo);
+  padding-left: var(--e-4);
+  margin-bottom: var(--e-4);
+}
+
+.identidad__nombre {
+  font-size: var(--t-3xl);
+  line-height: 1;
+  margin: 0;
+  overflow-wrap: anywhere;
+  hyphens: auto;
+}
+
+.identidad__mote {
+  color: var(--c-texto-2);
+  font-size: var(--t-lg);
+  margin: var(--e-1) 0 0;
+}
+
+.etiqueta-campeonato {
+  display: inline-block;
+  margin-top: var(--e-2);
+  padding: 2px var(--e-2);
+  font-size: var(--t-xs);
+  color: var(--c-texto-2);
+  border: 1px solid var(--c-linea);
+  border-radius: var(--radio);
+}
+
+/* ---------- Rejilla de cifras ---------- */
+.rejilla-datos {
+  display: grid;
+  /* min(100%, 130px) evita que en pantallas estrechas la columna mínima
+     sea más ancha que la propia rejilla. */
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 130px), 1fr));
+  gap: 1px;
+  background: var(--c-linea);
+  border: 1px solid var(--c-linea);
+}
+
+.dato {
+  min-width: 0;
+  background: var(--c-asfalto);
+  padding: var(--e-3);
+  overflow: hidden;   /* red de seguridad: nada se sale de la celda */
+}
+
+.dato__cifra {
+  display: block;
+  font-size: var(--t-xl);
+  line-height: 1.05;
+  overflow-wrap: anywhere;   /* además de romper, deja encoger el min-content */
+}
+
+.dato__etiqueta {
+  display: block;
+  margin-top: var(--e-1);
+  font-size: var(--t-xs);
+  line-height: 1.35;
+  color: var(--c-texto-2);
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+/* ---------- Mejor y peor resultado ---------- */
+.resultado { margin: 0 0 var(--e-3); }
+.resultado:last-child { margin-bottom: 0; }
+
+/* ---------- Easter egg (lore de la liga) ----------
+   Diseño distinto a propósito del resto de tarjetas: degradado diagonal rojo
+   sobre negro, borde que late y un "300" fantasma de fondo. La animación la
+   desactiva la regla de prefers-reduced-motion de base.css. */
+.easter-egg {
+  position: relative;
+  overflow: hidden;
+  margin: 0 0 var(--e-4);
+  padding: var(--e-3) var(--e-4);
+  border: 1px solid var(--c-rojo);
+  border-radius: var(--radio);
+  background:
+    linear-gradient(115deg,
+      color-mix(in srgb, var(--c-rojo) 26%, transparent) 0%,
+      transparent 55%),
+    linear-gradient(180deg, var(--c-asfalto-alto) 0%, var(--c-pista) 100%);
+  animation: latido-easter 2.6s ease-in-out infinite;
+}
+
+@keyframes latido-easter {
+  0%, 100% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--c-rojo) 40%, transparent),
+                inset 0 0 28px color-mix(in srgb, var(--c-rojo) 5%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 20px 2px color-mix(in srgb, var(--c-rojo) 28%, transparent),
+                inset 0 0 28px color-mix(in srgb, var(--c-rojo) 16%, transparent);
+  }
+}
+
+/* Los 300 puntos que se sacó de la manga */
+.easter-egg::after {
+  content: "300";
+  position: absolute;
+  right: var(--e-3);
+  bottom: -0.28em;
+  font-size: clamp(3rem, 9vw, 6rem);
+  line-height: 1;
+  color: var(--c-rojo);
+  opacity: 0.13;
+  pointer-events: none;
+}
+
+.easter-egg p { position: relative; margin: 0; }
+
+.easter-egg .easter-egg__etiqueta {
+  font-size: var(--t-xs);
+  color: var(--c-rojo);
+  letter-spacing: 0.08em;
+}
+
+.easter-egg .easter-egg__titulo {
+  margin-top: var(--e-1);
+  font-size: var(--t-lg);
+  line-height: 1.15;
+  color: var(--c-texto);
+}
+
+.easter-egg .easter-egg__texto {
+  margin-top: var(--e-2);
+  max-width: 60ch;
+  font-size: var(--t-sm);
+  color: var(--c-texto-2);
+}
+
+/* ---------- QPE ---------- */
+.qpe {
+  margin-top: var(--e-4);
+  padding: var(--e-3) var(--e-4);
+  background: var(--c-rojo-suave);
+  border: 1px solid var(--c-rojo);
+  border-left-width: 4px;
+  border-radius: var(--radio);
+}
+.qpe__titulo { font-size: var(--t-lg); color: var(--c-rojo); }
+.qpe__gente { color: var(--c-texto); }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+  .rejilla-perfil { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 560px) {
+  .rejilla-datos { grid-template-columns: repeat(auto-fit, minmax(min(100%, 110px), 1fr)); }
+  .dato { padding: var(--e-2) var(--e-3); }
+}

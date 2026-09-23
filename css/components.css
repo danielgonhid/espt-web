@@ -1,0 +1,108 @@
+/* =========================================================
+   ESPT Competizione — components.css
+   Piezas que se usan en más de una página: controles,
+   botones, tarjetas, títulos de sección y lienzo de gráficos.
+   Lo que solo usa una página va en css/pages/.
+   ========================================================= */
+
+/* ---------- Títulos de sección ---------- */
+.titulo-seccion {
+  font-size: var(--t-lg);
+  margin: 0 0 var(--e-3);
+  color: var(--c-texto);
+}
+
+/* ---------- Controles (buscador, selects) ---------- */
+.controles {
+  display: flex;
+  align-items: center;
+  gap: var(--e-3);
+  flex-wrap: wrap;
+  margin-bottom: var(--e-3);
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--e-1);
+  min-width: 220px;
+  flex: 1 1 240px;
+}
+
+.campo__etiqueta {
+  font-size: var(--t-xs);
+  color: var(--c-texto-2);
+}
+
+.entrada,
+.selector {
+  width: 100%;
+  padding: 10px var(--e-3);
+  background: var(--c-asfalto-alto);
+  color: var(--c-texto);
+  border: 1px solid var(--c-linea);
+  border-radius: var(--radio);
+  font-family: inherit;
+  font-size: var(--t-md);
+}
+.entrada::placeholder { color: var(--c-texto-3); }
+.entrada:focus,
+.selector:focus {
+  border-color: var(--c-rojo);
+  outline: none;
+  box-shadow: 0 0 0 3px var(--c-rojo-glow);
+}
+
+.recuento {
+  font-size: var(--t-sm);
+  color: var(--c-texto-2);
+  white-space: nowrap;
+}
+
+/* ---------- Botones ---------- */
+.boton {
+  display: inline-block;
+  padding: 10px var(--e-4);
+  background: var(--c-rojo);
+  color: var(--c-texto);
+  border: 0;
+  border-radius: var(--radio);
+  font-family: inherit;
+  font-size: var(--t-sm);
+  cursor: pointer;
+  transform: var(--sesgo);
+}
+.boton > span { display: inline-block; transform: var(--sesgo-inverso); }
+.boton:hover { background: var(--c-rojo-oscuro); text-decoration: none; }
+
+.boton--fantasma {
+  background: transparent;
+  color: var(--c-texto);
+  border: 1px solid var(--c-linea);
+}
+.boton--fantasma:hover { border-color: var(--c-rojo); background: var(--c-rojo-suave); }
+
+/* ---------- Tarjetas ---------- */
+.tarjeta {
+  min-width: 0;   /* item de grid: sin esto no encoge y el texto se sale */
+  background: var(--c-asfalto);
+  border: 1px solid var(--c-linea);
+  border-radius: var(--radio);
+  padding: var(--e-4);
+}
+
+/* Tarjeta que va debajo de otra */
+.tarjeta--separada { margin-top: var(--e-4); }
+
+.tarjeta__titulo {
+  margin: 0 0 var(--e-3);
+  font-size: var(--t-lg);
+  color: var(--c-texto);
+}
+
+/* ---------- Lienzo de gráficos ---------- */
+.lienzo-envoltorio {
+  position: relative;
+  width: 100%;
+  min-height: 380px;
+}

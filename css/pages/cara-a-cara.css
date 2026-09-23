@@ -1,0 +1,89 @@
+/* =========================================================
+   ESPT Competizione — pages/cara-a-cara.css
+   Solo el comparador H2H y el duelo más igualado.
+   ========================================================= */
+
+.h2h-cabeceras {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: var(--e-3);
+  align-items: center;
+  margin-bottom: var(--e-4);
+}
+
+.h2h-nombre {
+  font-size: var(--t-2xl);
+  line-height: 1.05;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.h2h-nombre--b { text-align: right; }
+
+.h2h-vs {
+  color: var(--c-rojo);
+  font-size: var(--t-lg);
+}
+
+/* ---------- Tabla comparativa ---------- */
+.h2h-tabla { width: 100%; border-collapse: collapse; }
+
+.h2h-leyenda {
+  caption-side: top;
+  text-align: left;
+  padding-bottom: var(--e-2);
+  font-size: var(--t-xs);
+  line-height: 1.35;
+  color: var(--c-texto-2);
+}
+
+.h2h-tabla td, .h2h-tabla th {
+  padding: 12px var(--e-3);
+  border-bottom: 1px solid var(--c-asfalto-alto);
+}
+
+.h2h-tabla th {
+  font-weight: 400;
+  color: var(--c-texto-2);
+  font-size: var(--t-sm);
+  text-align: center;
+  width: 34%;
+}
+
+.h2h-tabla td {
+  text-align: center;
+  font-size: var(--t-lg);
+  color: var(--c-texto-2);
+  width: 33%;
+  overflow-wrap: anywhere;
+}
+
+.h2h-gana {
+  color: var(--c-verde);
+  background: var(--c-verde-glow);
+  box-shadow: inset 0 0 0 1px var(--c-verde-borde);
+}
+
+.h2h-empate { color: var(--c-texto); }
+
+/* ---------- Duelo más igualado ---------- */
+.igualado {
+  margin-top: var(--e-5);
+  padding: var(--e-4);
+  border: 1px solid var(--c-linea);
+  border-top: 3px solid var(--c-rojo);
+  background: var(--c-asfalto);
+}
+.igualado__frase { font-size: var(--t-lg); margin: 0; }
+.igualado__frase strong { color: var(--c-rojo); font-weight: 400; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+  .h2h-cabeceras { grid-template-columns: 1fr; text-align: center; }
+  .h2h-nombre--b { text-align: center; }
+}
+
+@media (max-width: 560px) {
+  .h2h-tabla td { font-size: var(--t-md); }
+  .h2h-tabla th { font-size: var(--t-xs); }
+  .h2h-tabla td, .h2h-tabla th { padding: 10px var(--e-1); }
+}

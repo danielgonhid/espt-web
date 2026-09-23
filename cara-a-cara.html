@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cara a cara — ESPT Competizione</title>
+
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages/cara-a-cara.css">
+
+  <!-- Chart.js como global: lo usa js/charts.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" defer></script>
+  <script type="module" src="js/core/layout.js"></script>
+  <script type="module" src="js/pages/cara-a-cara.js"></script>
+</head>
+<body>
+
+  <header class="cabecera" id="cabecera"></header>
+
+  <main class="principal">
+    <div class="contenedor">
+
+      <noscript>
+        <div class="aviso">Esta web necesita JavaScript activado para mostrar las estadísticas.</div>
+      </noscript>
+
+      <h1 class="titulo-vista">Cara a cara</h1>
+      <p class="subtitulo-vista">
+        Enfrenta a dos pilotos del histórico y mira quién gana cada métrica.
+      </p>
+
+      <div class="controles">
+        <div class="campo">
+          <label class="campo__etiqueta" for="piloto-a">Piloto A</label>
+          <select class="selector" id="piloto-a"><option value="">Cargando…</option></select>
+        </div>
+        <div class="campo">
+          <label class="campo__etiqueta" for="piloto-b">Piloto B</label>
+          <select class="selector" id="piloto-b"><option value="">Cargando…</option></select>
+        </div>
+      </div>
+
+      <section id="zona-h2h">
+        <p class="cargando">Cargando pilotos…</p>
+      </section>
+
+      <section class="igualado" id="zona-igualado" aria-label="Duelo más igualado de la liga">
+        <p class="cargando">Calculando el duelo más igualado…</p>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="pie" id="pie"></footer>
+
+</body>
+</html>

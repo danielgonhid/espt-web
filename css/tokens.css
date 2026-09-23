@@ -1,0 +1,65 @@
+@import url(https://db.onlinewebfonts.com/c/f375fe11d4f432f1d0b9e127684bbad4?family=Accelerator+W01);
+
+/* =========================================================
+   ESPT Competizione — tokens.css
+   ÚNICO sitio donde se definen colores, tipografía, tamaños
+   y espaciados. El resto de CSS y charts.js leen de aquí.
+   Si cambias un valor, cambia en toda la web (gráficos incluidos).
+
+   Los colores "derivados" (brillos, fondos translúcidos) se
+   calculan con color-mix() a partir del color base: cambia
+   --c-rojo y sus variantes se recalculan solas.
+   ========================================================= */
+
+:root {
+  /* ---------- Fondos ---------- */
+  --c-pista:        #000000;
+  --c-asfalto:      #0d0d10;
+  --c-asfalto-alto: #15151a;
+  --c-tarjeta:      #1b1b21;
+  --c-linea:        #2c2c35;
+
+  /* ---------- Texto ---------- */
+  --c-texto:        #ffffff;
+  --c-texto-2:      #9d9daa;
+  --c-texto-3:      #6a6a76;
+
+  /* ---------- Acentos base ---------- */
+  --c-rojo:         #ff1f2c;
+  --c-rojo-oscuro:  #a80c15;
+  --c-verde:        #2bff88;   /* ganador en cara a cara y 2º piloto del gráfico */
+  --c-oro:          #ffc23d;   /* títulos */
+
+  /* ---------- Acentos derivados (no tocar: salen de los base) ---------- */
+  --c-rojo-glow:    color-mix(in srgb, var(--c-rojo) 28%, transparent);
+  --c-rojo-suave:   color-mix(in srgb, var(--c-rojo) 8%, transparent);
+  --c-verde-glow:   color-mix(in srgb, var(--c-verde) 16%, transparent);
+  --c-verde-borde:  color-mix(in srgb, var(--c-verde) 35%, transparent);
+
+  /* Fondos de fila: OPACOS a propósito. La columna congelada de la tabla
+     los necesita sólidos para que las demás celdas no se vean por debajo. */
+  --c-fila-par:     #111115;
+  --c-fila-hover:   color-mix(in srgb, var(--c-rojo) 8%, var(--c-asfalto));
+
+  /* ---------- Tipografía ---------- */
+  --f-base: "Accelerator W01", sans-serif;
+  --t-xs:   0.75rem;
+  --t-sm:   0.875rem;
+  --t-md:   1rem;
+  --t-lg:   clamp(1.0625rem, 0.95rem + 0.5vw, 1.375rem);
+  --t-xl:   clamp(1.25rem, 1rem + 1.3vw, 2rem);
+  --t-2xl:  clamp(1.75rem, 1.25rem + 2.4vw, 3rem);
+  --t-3xl:  clamp(2.125rem, 1.3rem + 4.2vw, 4.5rem);
+
+  /* ---------- Espaciado y formas ---------- */
+  --e-1: 4px;
+  --e-2: 8px;
+  --e-3: 16px;
+  --e-4: 24px;
+  --e-5: 40px;
+  --e-6: 64px;
+  --radio: 2px;
+  --ancho: 1400px;
+  --sesgo: skewX(-9deg);          /* mismo ángulo que la itálica */
+  --sesgo-inverso: skewX(9deg);   /* endereza el texto dentro de un elemento sesgado */
+}

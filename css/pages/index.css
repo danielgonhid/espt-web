@@ -1,0 +1,231 @@
+/* =========================================================
+   ESPT Competizione — pages/index.css
+   Solo la clasificación: tira de totales, récords y tabla.
+   ========================================================= */
+
+/* ---------- Tira de totales de la liga ---------- */
+.tira {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1px;
+  background: var(--c-linea);
+  border: 1px solid var(--c-linea);
+  margin-bottom: var(--e-4);
+}
+
+.tira__dato {
+  flex: 1 1 140px;
+  min-width: 0;
+  background: var(--c-asfalto);
+  padding: var(--e-3);
+}
+
+.tira__cifra {
+  display: block;
+  font-size: var(--t-xl);
+  line-height: 1.05;
+  color: var(--c-texto);
+  overflow-wrap: anywhere;
+}
+
+.tira__etiqueta {
+  display: block;
+  margin-top: var(--e-1);
+  font-size: var(--t-xs);
+  color: var(--c-texto-2);
+}
+
+/* ---------- Récords destacados ---------- */
+.highlights-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: var(--e-2);
+  margin-bottom: var(--e-5);
+}
+
+/* Si la sección falla, el aviso ocupa toda la fila en vez de una celda. */
+.highlights-grid > .aviso,
+.highlights-grid > .cargando { grid-column: 1 / -1; }
+
+.highlight {
+  display: flex;
+  flex-direction: column;
+  gap: var(--e-1);
+  min-width: 0;
+  background: var(--c-asfalto-alto);
+  border: 1px solid var(--c-linea);
+  border-top: 3px solid var(--c-rojo);
+  border-radius: var(--radio);
+  padding: var(--e-3) var(--e-4) var(--e-4);
+}
+
+.highlight__etiqueta {
+  margin: 0;
+  font-size: var(--t-xs);
+  color: var(--c-texto-2);
+  line-height: 1.3;
+}
+
+.highlight__piloto {
+  margin: 0;
+  font-size: var(--t-lg);
+  line-height: 1.15;
+  color: var(--c-rojo);
+  overflow-wrap: anywhere;
+}
+.highlight__piloto a { color: inherit; }
+.highlight__piloto a:hover { color: var(--c-texto); text-decoration: none; }
+.highlight__piloto--vacio { color: var(--c-texto-3); font-size: var(--t-md); }
+
+.highlight__valor {
+  margin: auto 0 0;
+  padding-top: var(--e-2);
+  font-size: var(--t-xl);
+  line-height: 1.05;
+  color: var(--c-texto);
+  overflow-wrap: anywhere;
+}
+
+.highlight__unidad {
+  font-size: var(--t-sm);
+  color: var(--c-texto-2);
+}
+
+/* ---------- Tabla de clasificación ---------- */
+
+/* El scroll (vertical Y horizontal) vive DENTRO de este contenedor, no en la
+   página. Así la barra horizontal está siempre a la vista sin bajar hasta el
+   último piloto, y la cabecera se puede quedar pegada arriba del contenedor. */
+.table-responsive {
+  max-height: 70vh;
+  overflow: auto;
+  border: 1px solid var(--c-linea);
+  background: var(--c-asfalto);
+  scrollbar-color: var(--c-linea) var(--c-asfalto);   /* Firefox */
+}
+
+/* Barras oscuras en navegadores WebKit */
+.table-responsive::-webkit-scrollbar { width: 12px; height: 12px; }
+.table-responsive::-webkit-scrollbar-track { background: var(--c-asfalto); }
+.table-responsive::-webkit-scrollbar-thumb {
+  background: var(--c-linea);
+  border: 3px solid var(--c-asfalto);
+  border-radius: 6px;
+}
+.table-responsive::-webkit-scrollbar-thumb:hover { background: var(--c-rojo-oscuro); }
+
+.tabla {
+  width: 100%;
+  /* separate + border-spacing 0 en lugar de collapse: con border-collapse los
+     bordes de un <th> sticky desaparecen al desplazarse. Los bordes se pintan
+     con box-shadow, que sí viaja con la celda. */
+  border-collapse: separate;
+  border-spacing: 0;
+  /* Se encoge sola en monitores pequeños para intentar evitar el scroll. */
+  font-size: clamp(0.6875rem, 0.55rem + 0.35vw, 0.8125rem);
+}
+
+/* Los datos NO se parten: una cifra en dos líneas es ilegible. */
+.tabla td { white-space: nowrap; }
+
+/* Las cabeceras SÍ. Son ellas, y no los datos, las que fijan el ancho de cada
+   columna ("Victorias" ocupa mucho más que "38"), así que dejarlas caer a dos
+   líneas es lo que más ancho ahorra. */
+.tabla th {
+  white-space: normal;
+  overflow-wrap: anywhere;
+  vertical-align: bottom;
+  line-height: 1.2;
+}
+
+.tabla thead th {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  background: var(--c-asfalto-alto);   /* opaco obligatorio: si no, las filas se ven debajo */
+  box-shadow: inset 0 -2px 0 var(--c-rojo);
+  color: var(--c-texto-2);
+  font-weight: 400;
+  text-align: right;
+  padding: var(--e-2) 6px;
+  cursor: pointer;
+  user-select: none;
+}
+.tabla thead th:first-child,
+.tabla thead th:nth-child(2) { text-align: left; }
+
+.tabla thead th:hover { color: var(--c-texto); background: var(--c-tarjeta); }
+
+.tabla th[aria-sort="ascending"],
+.tabla th[aria-sort="descending"] { color: var(--c-rojo); }
+
+/* Reserva sitio fijo para que la tabla no baile al ordenar, pero lo justo. */
+.tabla th .flecha { display: inline-block; width: 0.8em; color: var(--c-rojo); }
+
+.tabla tbody td {
+  padding: 7px 6px;
+  text-align: right;
+  border-bottom: 1px solid var(--c-asfalto-alto);
+  color: var(--c-texto-2);
+}
+.tabla tbody td:first-child,
+.tabla tbody td:nth-child(2) { text-align: left; }
+
+.tabla tbody tr:nth-child(even) { background: var(--c-fila-par); }
+.tabla tbody tr:hover { background: var(--c-fila-hover); }
+
+.tabla .celda-pos {
+  width: 38px;
+  color: var(--c-texto-3);
+  border-left: 3px solid transparent;
+  padding-left: 9px;
+}
+.tabla tr:hover .celda-pos { border-left-color: var(--c-rojo); }
+
+/* --- Columna del piloto congelada al desplazarse en horizontal ---
+   Solo se congela ESTA columna y con left: 0, sin calcular desplazamientos:
+   así no depende del ancho real de la columna de posición, que el navegador
+   puede cambiar. Si prefieres que se desplace como las demás, borra este
+   bloque entero y no se rompe nada más. */
+.tabla thead th[data-clave="nombre"] {
+  position: sticky;
+  left: 0;
+  z-index: 4;
+  box-shadow: inset 0 -2px 0 var(--c-rojo), 1px 0 0 var(--c-linea);
+}
+
+.tabla tbody .celda-piloto {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  background: var(--c-asfalto);
+  box-shadow: 1px 0 0 var(--c-linea);
+}
+.tabla tbody tr:nth-child(even) .celda-piloto { background: var(--c-fila-par); }
+.tabla tbody tr:hover .celda-piloto { background: var(--c-fila-hover); }
+/* --- fin de la columna congelada --- */
+
+.celda-piloto a {
+  color: var(--c-texto);
+  font-size: 0.9375rem;
+}
+.celda-piloto a:hover { color: var(--c-rojo); text-decoration: none; }
+
+.mote {
+  display: block;
+  font-size: var(--t-xs);
+  color: var(--c-texto-3);
+}
+
+.dato-fuerte { color: var(--c-texto); }
+.dato-titulos { color: var(--c-oro); }
+
+.sin-resultados {
+  padding: var(--e-5);
+  text-align: center;
+  color: var(--c-texto-2);
+}
+
+@media (max-height: 700px) {
+  .table-responsive { max-height: 78vh; }
+}
