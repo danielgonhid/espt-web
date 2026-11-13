@@ -4,6 +4,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Cara a cara — ESPT Competizione</title>
+  <meta name="description" content="Compara a dos pilotos de ESPT Competizione métrica a métrica y descubre cuál es el duelo más igualado de la liga.">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#08080a">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="ESPT Competizione">
+  <meta property="og:title" content="Cara a cara — ESPT Competizione">
+  <meta property="og:description" content="Compara a dos pilotos de ESPT Competizione métrica a métrica y descubre cuál es el duelo más igualado de la liga.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+  <!-- Fuentes. Barlow es la de lectura; Accelerator, solo rótulos (ver css/tokens.css).
+       Si el CDN no responde, la web se ve con la sans-serif del sistema. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&amp;family=Barlow+Condensed:wght@500;600;700&amp;display=swap">
+  <link rel="stylesheet" href="https://db.onlinewebfonts.com/c/f375fe11d4f432f1d0b9e127684bbad4?family=Accelerator+W01">
 
   <link rel="stylesheet" href="css/tokens.css">
   <link rel="stylesheet" href="css/base.css">
@@ -12,15 +27,18 @@
   <link rel="stylesheet" href="css/pages/cara-a-cara.css">
 
   <!-- Chart.js como global: lo usa js/charts.js -->
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" defer></script>
   <script type="module" src="js/core/layout.js"></script>
   <script type="module" src="js/pages/cara-a-cara.js"></script>
 </head>
 <body>
 
+  <a class="salto" href="#contenido">Saltar al contenido</a>
+
   <header class="cabecera" id="cabecera"></header>
 
-  <main class="principal">
+  <main class="principal" id="contenido" tabindex="-1">
     <div class="contenedor">
 
       <noscript>
@@ -29,25 +47,32 @@
 
       <h1 class="titulo-vista">Cara a cara</h1>
       <p class="subtitulo-vista">
-        Enfrenta a dos pilotos del histórico y mira quién gana cada métrica.
+        Elige dos pilotos del histórico y mira quién gana cada métrica.
       </p>
 
-      <div class="controles">
+      <div class="controles controles--duelo bloque">
         <div class="campo">
-          <label class="campo__etiqueta" for="piloto-a">Piloto A</label>
-          <select class="selector" id="piloto-a"><option value="">Cargando…</option></select>
+          <label class="etiqueta" for="piloto-a">Piloto A</label>
+          <select class="selector" id="piloto-a" name="a" autocomplete="off"><option value="">Cargando…</option></select>
         </div>
+        <button class="boton boton--fantasma boton--icono" id="intercambiar" type="button"
+                aria-label="Intercambiar los dos pilotos">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M7 7h13m0 0-4-4m4 4-4 4M17 17H4m0 0 4 4m-4-4 4-4"/>
+          </svg>
+        </button>
         <div class="campo">
-          <label class="campo__etiqueta" for="piloto-b">Piloto B</label>
-          <select class="selector" id="piloto-b"><option value="">Cargando…</option></select>
+          <label class="etiqueta" for="piloto-b">Piloto B</label>
+          <select class="selector" id="piloto-b" name="b" autocomplete="off"><option value="">Cargando…</option></select>
         </div>
       </div>
 
-      <section id="zona-h2h">
+      <div id="zona-h2h">
         <p class="cargando">Cargando pilotos…</p>
-      </section>
+      </div>
 
-      <section class="igualado" id="zona-igualado" aria-label="Duelo más igualado de la liga">
+      <section class="tarjeta igualado" id="zona-igualado" aria-label="Duelo más igualado de la liga">
         <p class="cargando">Calculando el duelo más igualado…</p>
       </section>
 

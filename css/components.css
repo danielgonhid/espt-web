@@ -5,17 +5,32 @@
    Lo que solo usa una página va en css/pages/.
    ========================================================= */
 
-/* ---------- Títulos de sección ---------- */
-.titulo-seccion {
-  font-size: var(--t-lg);
+/* ---------- Títulos de sección ----------
+   Mismo aspecto dentro y fuera de un bloque: una sola jerarquía. */
+.titulo-seccion,
+.tarjeta__titulo {
   margin: 0 0 var(--e-3);
+  font-family: var(--f-dato);
+  font-size: var(--t-lg);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 1.2;
   color: var(--c-texto);
+}
+
+/* ---------- Rótulo de un dato ---------- */
+.etiqueta {
+  font-size: var(--t-xs);
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--c-texto-2);
 }
 
 /* ---------- Controles (buscador, selects) ---------- */
 .controles {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   gap: var(--e-3);
   flex-wrap: wrap;
   margin-bottom: var(--e-3);
@@ -24,87 +39,153 @@
 .campo {
   display: flex;
   flex-direction: column;
-  gap: var(--e-1);
-  min-width: 220px;
+  gap: 6px;
+  font-weight: 500;
+  min-width: 0;
   flex: 1 1 240px;
 }
-
-.campo__etiqueta {
-  font-size: var(--t-xs);
-  color: var(--c-texto-2);
-}
+.campo--corto { flex: 0 1 360px; }
 
 .entrada,
 .selector {
   width: 100%;
+  min-height: 46px;
   padding: 10px var(--e-3);
-  background: var(--c-asfalto-alto);
+  background-color: var(--c-asfalto-alto);
   color: var(--c-texto);
   border: 1px solid var(--c-linea);
   border-radius: var(--radio);
   font-family: inherit;
-  font-size: var(--t-md);
+  font-size: var(--t-md);   /* 16px: por debajo, iOS hace zoom al enfocar */
+  transition: border-color var(--t-rapido) var(--curva),
+              background-color var(--t-rapido) var(--curva);
 }
 .entrada::placeholder { color: var(--c-texto-3); }
-.entrada:focus,
-.selector:focus {
+.entrada:hover,
+.selector:hover { border-color: var(--c-texto-3); }
+.entrada:focus-visible,
+.selector:focus-visible {
   border-color: var(--c-rojo);
-  outline: none;
-  box-shadow: 0 0 0 3px var(--c-rojo-glow);
+  outline: 2px solid var(--c-rojo-glow);
+  outline-offset: 0;
 }
 
+.selector { cursor: pointer; }
+
 .recuento {
+  margin-left: auto;
+  padding-bottom: 12px;
   font-size: var(--t-sm);
   color: var(--c-texto-2);
   white-space: nowrap;
 }
 
-/* ---------- Botones ---------- */
+/* ---------- Botones ----------
+   Una sola pareja en toda la web: principal (relleno) y fantasma (borde). */
 .boton {
-  display: inline-block;
-  padding: 10px var(--e-4);
-  background: var(--c-rojo);
-  color: var(--c-texto);
-  border: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--e-2);
+  min-height: 46px;
+  padding: 0 var(--e-4);
+  background: var(--c-rojo-oscuro);
+  color: #fff;
+  border: 1px solid transparent;
   border-radius: var(--radio);
-  font-family: inherit;
-  font-size: var(--t-sm);
+  font-family: var(--f-dato);
+  font-size: var(--t-md);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
   cursor: pointer;
-  transform: var(--sesgo);
+  transition: background-color var(--t-rapido) var(--curva),
+              border-color var(--t-rapido) var(--curva),
+              transform var(--t-rapido) var(--curva);
 }
-.boton > span { display: inline-block; transform: var(--sesgo-inverso); }
-.boton:hover { background: var(--c-rojo-oscuro); text-decoration: none; }
+.boton:hover {
+  background: var(--c-rojo);
+  text-decoration: none;
+  transform: translateY(-1px);
+}
+.boton:active { transform: translateY(1px); }
 
 .boton--fantasma {
   background: transparent;
   color: var(--c-texto);
-  border: 1px solid var(--c-linea);
+  border-color: var(--c-linea);
 }
-.boton--fantasma:hover { border-color: var(--c-rojo); background: var(--c-rojo-suave); }
+.boton--fantasma:hover {
+  background: var(--c-rojo-suave);
+  border-color: var(--c-rojo);
+}
 
-/* ---------- Tarjetas ---------- */
+/* Botón cuadrado con solo un icono (lleva aria-label en el HTML). */
+.boton--icono {
+  width: 46px;
+  padding: 0;
+  flex: none;
+}
+.boton--icono svg { width: 20px; height: 20px; }
+
+/* ---------- Bloques ----------
+   Sin caja: un bloque se separa del anterior con una línea arriba, como las
+   secciones de una hoja de resultados. (La clase se llama "tarjeta" por
+   historia; ya no dibuja ninguna.) */
 .tarjeta {
   min-width: 0;   /* item de grid: sin esto no encoge y el texto se sale */
-  background: var(--c-asfalto);
-  border: 1px solid var(--c-linea);
-  border-radius: var(--radio);
-  padding: var(--e-4);
+  padding-top: var(--e-4);
+  border-top: 1px solid var(--c-linea);
 }
 
-/* Tarjeta que va debajo de otra */
-.tarjeta--separada { margin-top: var(--e-4); }
+/* Bloque que va debajo de otro */
+.tarjeta--separada { margin-top: var(--e-5); }
 
-.tarjeta__titulo {
-  margin: 0 0 var(--e-3);
-  font-size: var(--t-lg);
-  color: var(--c-texto);
+/* ---------- Cifra con su rótulo (totales, ficha de piloto) ----------
+   Las cifras van en rejillas separadas solo por líneas finas, sin cajas.
+   Cada rejilla (.tira, .rejilla-datos) dice cuál es la primera celda de
+   cada fila para quitarle la línea izquierda y alinearla con el margen. */
+.dato {
+  display: flex;
+  flex-direction: column;
+  gap: var(--e-1);
+  min-width: 0;
+  padding: var(--e-3);
+  border-top: 1px solid var(--c-linea);
+  border-left: 1px solid var(--c-linea);
+}
+
+.dato__cifra {
+  font-family: var(--f-display);
+  font-size: clamp(1.375rem, 1rem + 1.3vw, 2.125rem);
+  font-weight: 400;
+  line-height: 1.1;
+  white-space: nowrap;   /* "18,3 %" nunca se parte en dos líneas */
+}
+.dato__cifra--oro { color: var(--c-oro); }
+.dato__cifra--cero { color: var(--c-texto-3); }
+
+/* Barra fina bajo un porcentaje: el ancho llega por la variable --p (0 a 100). */
+.dato__barra {
+  height: 2px;
+  margin-top: var(--e-2);
+  background: var(--c-linea);
+  overflow: hidden;
+}
+.dato__barra::after {
+  content: "";
+  display: block;
+  height: 100%;
+  width: calc(var(--p, 0) * 1%);
+  background: var(--c-rojo);
 }
 
 /* ---------- Lienzo de gráficos ---------- */
 .lienzo-envoltorio {
   position: relative;
   width: 100%;
-  min-height: 380px;
+  height: clamp(300px, 46vw, 400px);
 }
 
 /* ---------- Marca de la norma anti-Dani ----------
@@ -117,6 +198,8 @@
   color: var(--c-rojo);
   font-weight: 700;
   cursor: help;
-  text-decoration: underline dotted var(--c-rojo);
-  text-underline-offset: 2px;
+}
+
+@media (max-width: 640px) {
+  .recuento { margin-left: 0; padding-bottom: 0; }
 }

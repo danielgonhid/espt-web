@@ -1,75 +1,67 @@
 /* =========================================================
    ESPT Competizione — pages/perfil.css
-   Solo la ficha individual del piloto.
+   La ficha individual del piloto y el directorio de pilotos
+   (lo que se ve en perfil.html sin ningún piloto elegido).
    ========================================================= */
 
+/* ---------- Identidad ---------- */
+.identidad { margin: var(--e-4) 0; }
+
+.identidad__nombre {
+  margin: 0;
+  font-family: var(--f-display);
+  font-size: var(--t-3xl);
+  font-weight: 400;
+  line-height: 1;
+  overflow-wrap: anywhere;
+}
+
+.identidad__mote {
+  margin: var(--e-2) 0 0;
+  color: var(--c-texto-2);
+  font-size: var(--t-lg);
+}
+
+/* Resumen en una línea bajo el nombre: títulos, carreras, victorias. */
+.identidad__resumen {
+  margin: var(--e-3) 0 0;
+  font-size: var(--t-lg);
+  color: var(--c-texto-2);
+}
+.identidad__resumen strong { color: var(--c-oro); font-weight: 600; }
+
+/* ---------- Cuerpo de la ficha ---------- */
 .rejilla-perfil {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 520px);
-  gap: var(--e-4);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 480px);
+  gap: var(--e-5);
   align-items: start;
 }
 .rejilla-perfil > * { min-width: 0; }
 
-/* ---------- Identidad ---------- */
-.identidad {
-  border-left: 4px solid var(--c-rojo);
-  padding-left: var(--e-4);
-  margin-bottom: var(--e-4);
-}
+.grupo-datos + .grupo-datos { margin-top: var(--e-5); }
 
-.identidad__nombre {
-  font-size: var(--t-3xl);
-  line-height: 1;
-  margin: 0;
-  overflow-wrap: anywhere;
-  hyphens: auto;
-}
-
-.identidad__mote {
-  color: var(--c-texto-2);
-  font-size: var(--t-lg);
-  margin: var(--e-1) 0 0;
-}
-
-/* ---------- Rejilla de cifras ---------- */
 .rejilla-datos {
   display: grid;
-  /* min(100%, 130px) evita que en pantallas estrechas la columna mínima
-     sea más ancha que la propia rejilla. */
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 130px), 1fr));
-  gap: 1px;
-  background: var(--c-linea);
-  border: 1px solid var(--c-linea);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-bottom: 1px solid var(--c-linea);
 }
+/* Primera celda de cada fila: sin línea a la izquierda y pegada al margen. */
+.rejilla-datos .dato:nth-child(3n+1) { border-left: 0; padding-left: 0; }
 
-.dato {
-  min-width: 0;
-  background: var(--c-asfalto);
-  padding: var(--e-3);
-  overflow: hidden;   /* red de seguridad: nada se sale de la celda */
-}
-
-.dato__cifra {
-  display: block;
-  font-size: var(--t-xl);
-  line-height: 1.05;
-  overflow-wrap: anywhere;   /* además de romper, deja encoger el min-content */
-}
-
-.dato__etiqueta {
-  display: block;
-  margin-top: var(--e-1);
-  font-size: var(--t-xs);
-  line-height: 1.35;
-  color: var(--c-texto-2);
-  overflow-wrap: break-word;
-  hyphens: auto;
-}
+/* El gráfico arranca a la altura del primer título de la izquierda, sin línea encima. */
+.rejilla-perfil > .tarjeta { padding-top: 0; border-top: 0; }
 
 /* ---------- Mejor y peor resultado ---------- */
-.resultado { margin: 0 0 var(--e-3); }
-.resultado:last-child { margin-bottom: 0; }
+.resultados {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--e-2) var(--e-3);
+  align-items: baseline;
+  margin: 0;
+}
+.resultados dt { margin: 0; }
+.resultados dd { margin: 0; color: var(--c-texto); }
 
 /* ---------- Easter egg (lore de la liga) ----------
    Diseño distinto a propósito del resto de tarjetas: degradado diagonal rojo
@@ -87,18 +79,23 @@
       color-mix(in srgb, var(--c-rojo) 26%, transparent) 0%,
       transparent 55%),
     linear-gradient(180deg, var(--c-asfalto-alto) 0%, var(--c-pista) 100%);
+}
+
+/* El latido va en un pseudo-elemento y solo anima la opacidad: animar
+   box-shadow obliga al navegador a repintar la caja entera en cada fotograma. */
+.easter-egg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  box-shadow: inset 0 0 32px color-mix(in srgb, var(--c-rojo) 22%, transparent);
+  opacity: 0.2;
   animation: latido-easter 2.6s ease-in-out infinite;
+  pointer-events: none;
 }
 
 @keyframes latido-easter {
-  0%, 100% {
-    box-shadow: 0 0 0 0 color-mix(in srgb, var(--c-rojo) 40%, transparent),
-                inset 0 0 28px color-mix(in srgb, var(--c-rojo) 5%, transparent);
-  }
-  50% {
-    box-shadow: 0 0 20px 2px color-mix(in srgb, var(--c-rojo) 28%, transparent),
-                inset 0 0 28px color-mix(in srgb, var(--c-rojo) 16%, transparent);
-  }
+  0%, 100% { opacity: 0.2; }
+  50%      { opacity: 1; }
 }
 
 /* Los 300 puntos que se sacó de la manga */
@@ -106,7 +103,8 @@
   content: "300";
   position: absolute;
   right: var(--e-3);
-  bottom: -0.28em;
+  bottom: -0.2em;
+  font-family: var(--f-display);
   font-size: clamp(3rem, 9vw, 6rem);
   line-height: 1;
   color: var(--c-rojo);
@@ -116,16 +114,13 @@
 
 .easter-egg p { position: relative; margin: 0; }
 
-.easter-egg .easter-egg__etiqueta {
-  font-size: var(--t-xs);
-  color: var(--c-rojo);
-  letter-spacing: 0.08em;
-}
+.easter-egg .easter-egg__etiqueta { color: var(--c-rojo); }
 
 .easter-egg .easter-egg__titulo {
   margin-top: var(--e-1);
   font-size: var(--t-lg);
-  line-height: 1.15;
+  font-weight: 600;
+  line-height: 1.2;
   color: var(--c-texto);
 }
 
@@ -136,13 +131,12 @@
   color: var(--c-texto-2);
 }
 
-/* ---------- Norma anti-Dani ----------
-   Mismo lenguaje visual que .qpe (caja con borde izquierdo grueso en rojo):
-   es un aviso de reglamento, no lore, así que va sobrio y no lleva animación.
-   Solo aparece cuando el piloto tiene algo anulado (norma-antidani.js decide
-   eso; aquí solo se define el aspecto). */
-.norma-antidani {
-  margin: 0 0 var(--e-4);
+/* ---------- Avisos de reglamento: norma anti-Dani y QPE ----------
+   Mismo lenguaje visual los dos (caja con borde izquierdo grueso en rojo):
+   son avisos de reglamento, no lore, así que van sobrios y sin animación.
+   Solo aparecen cuando el piloto tiene algo que avisar. */
+.norma-antidani,
+.qpe {
   padding: var(--e-3) var(--e-4);
   background: var(--c-rojo-suave);
   border: 1px solid var(--c-rojo);
@@ -150,41 +144,80 @@
   border-radius: var(--radio);
 }
 
-.norma-antidani__etiqueta {
-  margin: 0;
-  font-size: var(--t-xs);
-  color: var(--c-rojo);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
+.norma-antidani { margin: 0 0 var(--e-4); }
+.qpe { margin-top: var(--e-4); }
+
+.norma-antidani p,
+.qpe p { margin: 0; }
+
+.norma-antidani__etiqueta,
+.qpe__titulo { color: var(--c-rojo); font-weight: 600; }
 
 .norma-antidani__texto {
-  margin-top: var(--e-2);
-  max-width: 60ch;
+  margin-top: var(--e-2) !important;
+  max-width: 70ch;
   font-size: var(--t-sm);
-  line-height: 1.5;
   color: var(--c-texto-2);
 }
-.norma-antidani__texto strong { color: var(--c-texto); font-weight: 400; }
+.norma-antidani__texto strong { color: var(--c-texto); font-weight: 600; }
 
-/* ---------- QPE ---------- */
-.qpe {
-  margin-top: var(--e-4);
-  padding: var(--e-3) var(--e-4);
-  background: var(--c-rojo-suave);
-  border: 1px solid var(--c-rojo);
-  border-left-width: 4px;
-  border-radius: var(--radio);
+.qpe__gente { margin-top: var(--e-1) !important; color: var(--c-texto); }
+
+/* ---------- Directorio de pilotos ----------
+   Una lista de inscritos en columnas: nombre a la izquierda y carreras a la
+   derecha, con un renglón debajo. Sin cajas.
+   El nombre NUNCA se parte: si no cabe junto a las cifras, son las cifras
+   las que bajan a la línea siguiente. */
+.directorio {
+  columns: 4 250px;
+  column-gap: var(--e-5);
+  margin: var(--e-4) 0 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--c-linea);
 }
-.qpe__titulo { font-size: var(--t-lg); color: var(--c-rojo); }
-.qpe__gente { color: var(--c-texto); }
+.directorio li { break-inside: avoid; }
+
+.directorio__enlace {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0 var(--e-3);
+  min-height: 48px;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--c-linea);
+  color: var(--c-texto);
+  transition: color var(--t-rapido) var(--curva),
+              padding-left var(--t-rapido) var(--curva);
+}
+.directorio__enlace:hover {
+  color: var(--c-rojo);
+  padding-left: var(--e-2);
+  text-decoration: none;
+}
+
+.directorio__nombre {
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.directorio__cifra {
+  margin-left: auto;
+  font-size: var(--t-xs);
+  color: var(--c-texto-3);
+  white-space: nowrap;
+}
+.directorio__titulos { color: var(--c-oro); }
 
 /* ---------- Responsive ---------- */
-@media (max-width: 900px) {
+@media (max-width: 960px) {
   .rejilla-perfil { grid-template-columns: 1fr; }
 }
 
-@media (max-width: 560px) {
-  .rejilla-datos { grid-template-columns: repeat(auto-fit, minmax(min(100%, 110px), 1fr)); }
-  .dato { padding: var(--e-2) var(--e-3); }
+@media (max-width: 480px) {
+  .rejilla-datos { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .rejilla-datos .dato:nth-child(3n+1) { border-left: 1px solid var(--c-linea); padding-left: var(--e-3); }
+  .rejilla-datos .dato:nth-child(odd) { border-left: 0; padding-left: 0; }
+  .norma-antidani, .qpe, .easter-egg { padding: var(--e-3); }
 }

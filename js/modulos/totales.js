@@ -16,9 +16,9 @@ export function renderTotales(contenedor, pilotos) {
 
   contenedor.innerHTML = datos
     .map(([cifra, etiqueta]) => `
-      <div class="tira__dato">
-        <span class="tira__cifra numeros">${cifra}</span>
-        <span class="tira__etiqueta">${etiqueta}</span>
+      <div class="dato">
+        <span class="dato__cifra numeros">${cifra}</span>
+        <span class="etiqueta">${etiqueta}</span>
       </div>`)
     .join("");
 }

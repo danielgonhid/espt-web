@@ -7,11 +7,11 @@
 
 import { RUTA_DATOS } from "./config.js";
 
-let cache = null;
+// Se guarda la PROMESA, no el resultado: la cabecera y la página piden los
+// datos casi a la vez y así comparten una sola descarga en vez de hacer dos.
+let promesa = null;
 
-export async function cargarDatos() {
-  if (cache) return cache;
-
+async function descargar() {
   if (location.protocol === "file:") {
     throw new Error(
       "Estás abriendo la web con doble clic (file://). El navegador no deja " +
@@ -24,10 +24,18 @@ export async function cargarDatos() {
   if (!res.ok) throw new Error(`No se pudo leer ${RUTA_DATOS} (HTTP ${res.status}).`);
 
   const json = await res.json();
-  cache = Array.isArray(json) ? { meta: {}, pilotos: json } : json;   // acepta las dos formas
+  const datos = Array.isArray(json) ? { meta: {}, pilotos: json } : json;   // acepta las dos formas
 
-  if (!Array.isArray(cache.pilotos)) {
+  if (!Array.isArray(datos.pilotos)) {
     throw new Error(`${RUTA_DATOS} no tiene una lista "pilotos".`);
   }
-  return cache;
+  return datos;
+}
+
+export function cargarDatos() {
+  promesa ??= descargar().catch((err) => {
+    promesa = null;   // si falló, el siguiente intento vuelve a descargar
+    throw err;
+  });
+  return promesa;
 }

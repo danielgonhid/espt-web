@@ -16,16 +16,43 @@ export const esc = (txt) => String(txt ?? "").replace(/[&<>"']/g, (c) => ENTIDAD
 
 // Quita acentos y pasa a minúsculas: "Raúl" y "raul" deben casar.
 export const normalizar = (txt) =>
-  String(txt ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+  String(txt ?? "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim();
 
 export const ratio = (a, b) => (b > 0 ? a / b : 0);
 
 export const pct = (a, b) => (b > 0 ? (a / b) * 100 : 0);
 
-export const fmtPct = (n) => `${n.toFixed(1)}%`;
+/* ---------- Formato de cifras ----------
+   Con Intl y en español: coma decimal ("18,3 %", "4,27") en vez del punto
+   que da toFixed(). Un formateador por nº de decimales, creado una sola vez. */
+const formateadores = new Map();
+function formateador(dec) {
+  if (!formateadores.has(dec)) {
+    formateadores.set(dec, new Intl.NumberFormat("es-ES", {
+      minimumFractionDigits: dec,
+      maximumFractionDigits: dec,
+      useGrouping: false
+    }));
+  }
+  return formateadores.get(dec);
+}
 
-export const fmtNum = (n, dec = 2) =>
-  Number.isFinite(n) ? n.toFixed(dec).replace(/\.00$/, "") : "—";
+export const fmtNum = (n, dec = 2) => (Number.isFinite(n) ? formateador(dec).format(n) : "—");
+
+//   es un espacio que no parte línea: la cifra y su "%" van siempre juntos.
+export const fmtPct = (n) => `${fmtNum(n, 1)} %`;
+
+/** "2026-09-23" -> "23 de septiembre de 2026". Si la fecha no vale, devuelve "". */
+export function fmtFecha(iso) {
+  const fecha = new Date(iso);
+  if (Number.isNaN(fecha.getTime())) return "";
+  return new Intl.DateTimeFormat("es-ES", { dateStyle: "long" }).format(fecha);
+}
+
+/** plural(1, "carrera", "carreras") -> "1 carrera"; con 2 -> "2 carreras". */
+export const plural = (n, uno, varios) => `${n} ${n === 1 ? uno : varios}`;
+
+/* ---------- URL ---------- */
 
 export const getParam = (clave) => new URLSearchParams(location.search).get(clave);
 

@@ -3,91 +3,69 @@
    Solo la clasificación: tira de totales, récords y tabla.
    ========================================================= */
 
-/* ---------- Tira de totales de la liga ---------- */
+/* ---------- Tira de totales de la liga ----------
+   Una banda de cinco cifras separadas por líneas, sin cajas. */
 .tira {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1px;
-  background: var(--c-linea);
-  border: 1px solid var(--c-linea);
-  margin-bottom: var(--e-4);
-}
-
-.tira__dato {
-  flex: 1 1 140px;
-  min-width: 0;
-  background: var(--c-asfalto);
-  padding: var(--e-3);
-}
-
-.tira__cifra {
-  display: block;
-  font-size: var(--t-xl);
-  line-height: 1.05;
-  color: var(--c-texto);
-  overflow-wrap: anywhere;
-}
-
-.tira__etiqueta {
-  display: block;
-  margin-top: var(--e-1);
-  font-size: var(--t-xs);
-  color: var(--c-texto-2);
-}
-
-/* ---------- Récords destacados ---------- */
-.highlights-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-  gap: var(--e-2);
-  margin-bottom: var(--e-5);
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  margin-top: var(--e-5);
+  border-bottom: 1px solid var(--c-linea);
 }
+.tira .dato:first-child { border-left: 0; padding-left: 0; }
 
 /* Si la sección falla, el aviso ocupa toda la fila en vez de una celda. */
-.highlights-grid > .aviso,
-.highlights-grid > .cargando { grid-column: 1 / -1; }
+.tira > .aviso { grid-column: 1 / -1; }
 
-.highlight {
-  display: flex;
-  flex-direction: column;
-  gap: var(--e-1);
-  min-width: 0;
-  background: var(--c-asfalto-alto);
-  border: 1px solid var(--c-linea);
-  border-top: 3px solid var(--c-rojo);
-  border-radius: var(--radio);
-  padding: var(--e-3) var(--e-4) var(--e-4);
+/* ---------- Récords destacados ----------
+   Una lista con renglones, como una hoja de resultados: qué récord, quién
+   lo tiene y la cifra a la derecha. */
+.highlights-grid { border-top: 1px solid var(--c-linea); }
+
+.record {
+  display: grid;
+  /* Tercera columna de ancho fijo: si fuera "auto", cada renglón la haría de
+     un ancho distinto y los nombres no quedarían alineados entre sí. */
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr) 17rem;
+  align-items: baseline;
+  gap: var(--e-2) var(--e-4);
+  padding: 14px 0;
+  border-bottom: 1px solid var(--c-linea);
 }
 
-.highlight__etiqueta {
+.record__etiqueta {
   margin: 0;
-  font-size: var(--t-xs);
-  color: var(--c-texto-2);
-  line-height: 1.3;
+  font-size: var(--t-md);
+  font-weight: 400;
 }
 
-.highlight__piloto {
+/* En el HTML la cifra va antes que el nombre; aquí se muestra al final. */
+.record__piloto {
+  order: 2;
   margin: 0;
   font-size: var(--t-lg);
-  line-height: 1.15;
-  color: var(--c-rojo);
+  font-weight: 600;
+  line-height: 1.25;
   overflow-wrap: anywhere;
 }
-.highlight__piloto a { color: inherit; }
-.highlight__piloto a:hover { color: var(--c-texto); text-decoration: none; }
-.highlight__piloto--vacio { color: var(--c-texto-3); font-size: var(--t-md); }
+.record__piloto a { color: var(--c-texto); }
+.record__piloto a:hover { color: var(--c-rojo); }
+.record__piloto--vacio { color: var(--c-texto-3); font-size: var(--t-md); font-weight: 400; }
 
-.highlight__valor {
-  margin: auto 0 0;
-  padding-top: var(--e-2);
-  font-size: var(--t-xl);
-  line-height: 1.05;
-  color: var(--c-texto);
-  overflow-wrap: anywhere;
+.record__valor {
+  order: 3;
+  margin: 0;
+  text-align: right;
+  white-space: nowrap;
+}
+.record__valor .numeros {
+  margin-right: 0.35em;   /* la itálica del rótulo se echa encima de la unidad */
+  font-family: var(--f-display);
+  font-size: 1.5rem;
+  line-height: 1.1;
 }
 
-.highlight__unidad {
-  font-size: var(--t-sm);
+.record__unidad {
+  font-size: var(--t-xs);
   color: var(--c-texto-2);
 }
 
@@ -97,9 +75,10 @@
    página. Así la barra horizontal está siempre a la vista sin bajar hasta el
    último piloto, y la cabecera se puede quedar pegada arriba del contenedor. */
 .table-responsive {
-  max-height: 70vh;
+  max-height: 72vh;
   overflow: auto;
   border: 1px solid var(--c-linea);
+  border-radius: var(--radio);
   background: var(--c-asfalto);
   scrollbar-color: var(--c-linea) var(--c-asfalto);   /* Firefox */
 }
@@ -112,7 +91,7 @@
   border: 3px solid var(--c-asfalto);
   border-radius: 6px;
 }
-.table-responsive::-webkit-scrollbar-thumb:hover { background: var(--c-rojo-oscuro); }
+.table-responsive::-webkit-scrollbar-thumb:hover { background: var(--c-texto-3); }
 
 .tabla {
   width: 100%;
@@ -121,66 +100,85 @@
      con box-shadow, que sí viaja con la celda. */
   border-collapse: separate;
   border-spacing: 0;
-  /* Se encoge sola en monitores pequeños para intentar evitar el scroll. */
-  font-size: clamp(0.6875rem, 0.55rem + 0.35vw, 0.8125rem);
+  font-size: var(--t-sm);
 }
 
-/* Los datos NO se parten: una cifra en dos líneas es ilegible. */
-.tabla td { white-space: nowrap; }
-
-/* Las cabeceras SÍ. Son ellas, y no los datos, las que fijan el ancho de cada
-   columna ("Victorias" ocupa mucho más que "38"), así que dejarlas caer a dos
-   líneas es lo que más ancho ahorra. */
-.tabla th {
-  white-space: normal;
-  overflow-wrap: anywhere;
-  vertical-align: bottom;
-  line-height: 1.2;
-}
+/* Ni datos ni cabeceras se parten: una cifra en dos líneas es ilegible, y con
+   la fuente de lectura las cabeceras ya caben en una. */
+.tabla td,
+.tabla th { white-space: nowrap; }
 
 .tabla thead th {
   position: sticky;
   top: 0;
   z-index: 3;
+  padding: 0;
   background: var(--c-asfalto-alto);   /* opaco obligatorio: si no, las filas se ven debajo */
   box-shadow: inset 0 -2px 0 var(--c-rojo);
   color: var(--c-texto-2);
-  font-weight: 400;
+  font-size: var(--t-xs);
+  font-weight: 600;
   text-align: right;
-  padding: var(--e-2) 6px;
-  cursor: pointer;
-  user-select: none;
 }
-.tabla thead th:first-child,
-.tabla thead th:nth-child(2) { text-align: left; }
+.tabla thead th:first-child { padding: 0 var(--e-2) 0 var(--e-3); text-align: left; }
 
-.tabla thead th:hover { color: var(--c-texto); background: var(--c-tarjeta); }
+/* El botón de ordenar ocupa toda la celda: toda la cabecera es pulsable
+   y se llega a ella con el tabulador. */
+.orden {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 2px;
+  width: 100%;
+  min-height: 46px;
+  padding: 0 12px;
+  background: none;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  cursor: pointer;
+  transition: color var(--t-rapido) var(--curva),
+              background-color var(--t-rapido) var(--curva);
+}
+.orden:hover { color: var(--c-texto); background: var(--c-tarjeta); }
+.orden:focus-visible { outline-offset: -3px; }
 
-.tabla th[aria-sort="ascending"],
-.tabla th[aria-sort="descending"] { color: var(--c-rojo); }
+.tabla th[data-clave="nombre"] .orden { justify-content: flex-start; }
+
+.tabla th[aria-sort="ascending"] .orden,
+.tabla th[aria-sort="descending"] .orden { color: var(--c-texto); }
 
 /* Reserva sitio fijo para que la tabla no baile al ordenar, pero lo justo. */
-.tabla th .flecha { display: inline-block; width: 0.8em; color: var(--c-rojo); }
+.orden .flecha {
+  display: inline-block;
+  width: 0.9em;
+  color: var(--c-rojo);
+  font-size: 0.7em;
+  text-align: center;
+}
 
 .tabla tbody td {
-  padding: 7px 6px;
+  padding: 11px 12px;
   text-align: right;
-  border-bottom: 1px solid var(--c-asfalto-alto);
+  border-bottom: 1px solid var(--c-linea-suave);
   color: var(--c-texto-2);
 }
-.tabla tbody td:first-child,
-.tabla tbody td:nth-child(2) { text-align: left; }
+.tabla tbody tr:last-child td { border-bottom: 0; }
 
 .tabla tbody tr:nth-child(even) { background: var(--c-fila-par); }
 .tabla tbody tr:hover { background: var(--c-fila-hover); }
 
 .tabla .celda-pos {
-  width: 38px;
+  width: 48px;
+  padding-left: var(--e-3);
+  text-align: left;
   color: var(--c-texto-3);
-  border-left: 3px solid transparent;
-  padding-left: 9px;
+  box-shadow: inset 3px 0 0 transparent;
+  transition: box-shadow var(--t-rapido) var(--curva);
 }
-.tabla tr:hover .celda-pos { border-left-color: var(--c-rojo); }
+.tabla tr:hover .celda-pos { box-shadow: inset 3px 0 0 var(--c-rojo); }
 
 /* --- Columna del piloto congelada al desplazarse en horizontal ---
    Solo se congela ESTA columna y con left: 0, sin calcular desplazamientos:
@@ -198,6 +196,7 @@
   position: sticky;
   left: 0;
   z-index: 2;
+  text-align: left;
   background: var(--c-asfalto);
   box-shadow: 1px 0 0 var(--c-linea);
 }
@@ -207,9 +206,10 @@
 
 .celda-piloto a {
   color: var(--c-texto);
-  font-size: 0.9375rem;
+  font-size: var(--t-md);
+  font-weight: 600;
 }
-.celda-piloto a:hover { color: var(--c-rojo); text-decoration: none; }
+.celda-piloto a:hover { color: var(--c-rojo); }
 
 .mote {
   display: block;
@@ -217,15 +217,44 @@
   color: var(--c-texto-3);
 }
 
-.dato-fuerte { color: var(--c-texto); }
-.dato-titulos { color: var(--c-oro); }
+.dato-fuerte { color: var(--c-texto) !important; }
+.dato-titulos { color: var(--c-oro) !important; font-weight: 600; }
+/* Los ceros se apagan: en una tabla de 65 filas, lo que destaca es quien tiene algo. */
+.dato-cero { color: var(--c-texto-3) !important; }
 
 .sin-resultados {
-  padding: var(--e-5);
-  text-align: center;
+  padding: var(--e-5) var(--e-3) !important;
+  text-align: center !important;
+  white-space: normal !important;
   color: var(--c-texto-2);
 }
 
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+  /* Cinco cifras en dos filas sin hueco: dos anchas arriba y tres debajo. */
+  .tira { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  .tira .dato { grid-column: span 2; }
+  .tira .dato:nth-child(-n+2) { grid-column: span 3; }
+  .tira .dato:nth-child(3) { border-left: 0; padding-left: 0; }
+}
+
+@media (max-width: 640px) {
+  .tira { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tira .dato,
+  .tira .dato:nth-child(-n+2) { grid-column: auto; }
+  .tira .dato:first-child { grid-column: 1 / -1; }
+  /* Primera celda de cada fila: la 1 (sola), la 2 y la 4. */
+  .tira .dato:nth-child(3) { border-left: 1px solid var(--c-linea); padding-left: var(--e-3); }
+  .tira .dato:nth-child(2),
+  .tira .dato:nth-child(4) { border-left: 0; padding-left: 0; }
+
+  /* Récord en dos renglones: el rótulo arriba; debajo, nombre y cifra. */
+  .record { grid-template-columns: minmax(0, 1fr) auto; }
+  .record__etiqueta { grid-column: 1 / -1; font-size: var(--t-sm); color: var(--c-texto-2); }
+  .tabla tbody td { padding: 10px; }
+  .orden { padding: 0 10px; }
+}
+
 @media (max-height: 700px) {
-  .table-responsive { max-height: 78vh; }
+  .table-responsive { max-height: 80vh; }
 }

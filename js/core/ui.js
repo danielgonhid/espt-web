@@ -7,7 +7,7 @@
    sustituye por un aviso y el resto de la página sigue viva.
    ========================================================= */
 
-import { esc } from "./utils.js";
+import { esc, plural } from "./utils.js";
 
 /**
  * Pinta una sección aislada del resto.
@@ -29,7 +29,7 @@ export async function seccion(nombre, contenedor, fn) {
     contenedor.innerHTML = `
       <div class="aviso aviso--seccion" role="alert">
         <p><strong>No se pudo mostrar: ${nombre}.</strong></p>
-        <p>El resto de la página funciona. Detalle del error en la consola (F12).</p>
+        <p>El resto de la página funciona. Recarga para reintentarlo; el detalle del error está en la consola (F12).</p>
       </div>`;
     return false;
   }
@@ -55,7 +55,7 @@ export function rellenarSelect(select, pilotos, seleccionado) {
       .map((p) => {
         const etiqueta = p.mote ? `${p.nombre} · ${p.mote}` : p.nombre;
         const sel = seleccionado && seleccionado.id === p.id ? " selected" : "";
-        return `<option value="${esc(p.id)}"${sel}>${esc(etiqueta)} (${p.carreras})</option>`;
+        return `<option value="${esc(p.id)}"${sel}>${esc(etiqueta)} · ${plural(p.carreras, "carrera", "carreras")}</option>`;
       })
       .join("");
 }

@@ -6,7 +6,7 @@
 
 import { MIN_CARRERAS_POS_MEDIA } from "../core/config.js";
 import { mejores, posicionMedia } from "../core/metricas.js";
-import { urlPerfil, esc } from "../core/utils.js";
+import { urlPerfil, esc, fmtNum } from "../core/utils.js";
 
 /** Calcula los récords. Sin DOM, para poder probarla aparte. */
 export function calcularRecords(pilotos) {
@@ -30,9 +30,9 @@ export function calcularRecords(pilotos) {
       vacioSi: (r) => !r.valor },
     { etiqueta: "Piloto más experimentado", res: experiencia, unidad: "carreras" },
     { etiqueta: "Más carreras sin ganar", res: sinGanar, unidad: "carreras sin victoria" },
-    { etiqueta: "Más carreras sin subir al podio", res: sinPodio, unidad: "carreras sin podio" },
-    { etiqueta: `Mejor posición media (mín. ${MIN_CARRERAS_POS_MEDIA} carreras)`,
-      res: posMedia, unidad: "de media", dec: 2, sufijo: posEstimada ? "*" : "" }
+    { etiqueta: "Más carreras sin podio", res: sinPodio, unidad: "carreras sin podio" },
+    { etiqueta: `Mejor posición media · mín. ${MIN_CARRERAS_POS_MEDIA} carreras`, res: posMedia,
+      unidad: "de media", dec: 2, sufijo: posEstimada ? "*" : "" }
   ];
 }
 
@@ -42,9 +42,9 @@ function tarjeta(rec) {
 
   if (vacio) {
     return `
-      <article class="highlight">
-        <p class="highlight__etiqueta">${rec.etiqueta}</p>
-        <p class="highlight__piloto highlight__piloto--vacio">Sin datos todavía</p>
+      <article class="record">
+        <h3 class="record__etiqueta etiqueta">${rec.etiqueta}</h3>
+        <p class="record__piloto record__piloto--vacio">Sin datos todavía</p>
       </article>`;
   }
 
@@ -53,15 +53,15 @@ function tarjeta(rec) {
     .map((p) => `<a href="${urlPerfil(p)}">${esc(p.nombre)}</a>`)
     .join(", ");
 
-  const cifra = res.valor.toFixed(rec.dec || 0) + (rec.sufijo || "");
+  const cifra = fmtNum(res.valor, rec.dec || 0) + (rec.sufijo || "");
 
   return `
-    <article class="highlight">
-      <p class="highlight__etiqueta">${rec.etiqueta}</p>
-      <p class="highlight__piloto">${nombres}</p>
-      <p class="highlight__valor numeros">${cifra}
-        <span class="highlight__unidad">${rec.unidad}</span>
+    <article class="record">
+      <h3 class="record__etiqueta etiqueta">${rec.etiqueta}</h3>
+      <p class="record__valor"><span class="numeros">${cifra}</span>
+        <span class="record__unidad">${rec.unidad}</span>
       </p>
+      <p class="record__piloto">${nombres}</p>
     </article>`;
 }
 

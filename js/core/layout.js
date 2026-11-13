@@ -30,9 +30,10 @@ function pintarCabecera() {
     return `<a class="nav__enlace" href="${href}"${activa}>${texto}</a>`;
   }).join("");
 
+  // translate="no": un traductor automático no debe tocar el nombre de la liga.
   cabecera.innerHTML = `
     <div class="contenedor cabecera__fila">
-      <a class="logo" href="index.html" aria-label="ESPT Competizione, inicio">
+      <a class="logo" href="index.html" translate="no" aria-label="ESPT Competizione, inicio">
         <span class="logo__espt">ESPT</span><span class="logo__competizione">Competizione</span>
       </a>
       <nav class="nav" aria-label="Secciones">${enlaces}</nav>
@@ -42,8 +43,33 @@ function pintarCabecera() {
 function pintarPie() {
   const pie = document.getElementById("pie");
   if (!pie) return;
-  pie.innerHTML = `<div class="contenedor">ESPT Competizione · datos servidos desde data.json</div>`;
+  pie.innerHTML = `
+    <div class="contenedor pie__fila">
+      <p><span translate="no">ESPT Competizione</span> · Liga privada de simracing en Assetto Corsa</p>
+      <p id="pie-fecha"></p>
+    </div>`;
+}
+
+/**
+ * Fecha de los datos en el pie. Es un extra: se carga con import() dinámico
+ * y dentro de un try para que, si data.js o el JSON fallan, la cabecera y el
+ * pie sigan saliendo igual (simplemente sin fecha).
+ */
+async function pintarFechaDatos() {
+  try {
+    const [{ cargarDatos }, { fmtFecha }] = await Promise.all([
+      import("./data.js"),
+      import("./utils.js")
+    ]);
+    const { meta } = await cargarDatos();
+    const fecha = fmtFecha(meta?.generado);
+    const hueco = document.getElementById("pie-fecha");
+    if (fecha && hueco) hueco.textContent = `Datos actualizados el ${fecha}`;
+  } catch {
+    /* Sin fecha. El error de datos ya lo muestra la propia página. */
+  }
 }
 
 pintarCabecera();
 pintarPie();
+pintarFechaDatos();

@@ -3,7 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Perfil de piloto — ESPT Competizione</title>
+  <title>Perfiles de piloto — ESPT Competizione</title>
+  <meta name="description" content="Ficha de cada piloto de ESPT Competizione: sus cifras, sus ratios y un gráfico que lo compara con el mejor registro de la liga.">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#08080a">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="ESPT Competizione">
+  <meta property="og:title" content="Perfiles de piloto — ESPT Competizione">
+  <meta property="og:description" content="Ficha de cada piloto de ESPT Competizione: sus cifras, sus ratios y un gráfico que lo compara con el mejor registro de la liga.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+  <!-- Fuentes. Barlow es la de lectura; Accelerator, solo rótulos (ver css/tokens.css).
+       Si el CDN no responde, la web se ve con la sans-serif del sistema. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&amp;family=Barlow+Condensed:wght@500;600;700&amp;display=swap">
+  <link rel="stylesheet" href="https://db.onlinewebfonts.com/c/f375fe11d4f432f1d0b9e127684bbad4?family=Accelerator+W01">
 
   <link rel="stylesheet" href="css/tokens.css">
   <link rel="stylesheet" href="css/base.css">
@@ -12,15 +27,18 @@
   <link rel="stylesheet" href="css/pages/perfil.css">
 
   <!-- Chart.js como global: lo usa js/charts.js -->
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" defer></script>
   <script type="module" src="js/core/layout.js"></script>
   <script type="module" src="js/pages/perfil.js"></script>
 </head>
 <body>
 
+  <a class="salto" href="#contenido">Saltar al contenido</a>
+
   <header class="cabecera" id="cabecera"></header>
 
-  <main class="principal">
+  <main class="principal" id="contenido" tabindex="-1">
     <div class="contenedor">
 
       <noscript>
@@ -28,18 +46,19 @@
       </noscript>
 
       <div class="controles">
-        <div class="campo">
-          <label class="campo__etiqueta" for="selector-piloto">Cambiar de piloto</label>
-          <select class="selector" id="selector-piloto">
+        <div class="campo campo--corto">
+          <label class="etiqueta" for="selector-piloto">Ver otro piloto</label>
+          <select class="selector" id="selector-piloto" name="piloto" autocomplete="off">
             <option value="">Cargando…</option>
           </select>
         </div>
-        <a class="boton boton--fantasma" href="index.html"><span>Volver a la clasificación</span></a>
+        <!-- perfil.js le pone el destino y lo muestra cuando hay un piloto elegido -->
+        <a class="boton boton--fantasma oculto" id="enlace-comparar" href="cara-a-cara.html">Comparar con otro piloto</a>
       </div>
 
-      <section id="zona-perfil">
+      <div id="zona-perfil">
         <p class="cargando">Cargando piloto…</p>
-      </section>
+      </div>
 
     </div>
   </main>

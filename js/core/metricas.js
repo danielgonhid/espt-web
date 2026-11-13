@@ -6,7 +6,7 @@
    ========================================================= */
 
 import { MIN_CARRERAS_H2H, POS_MEDIA_RESTO } from "./config.js";
-import { ratio } from "./utils.js";
+import { ratio, plural } from "./utils.js";
 
 /* ---------- Posición media ---------- */
 
@@ -42,8 +42,8 @@ export function mejorResultado(p) {
 
 export function peorResultado(p) {
   if (p.peor_resultado) return p.peor_resultado;
-  if (p.dns > 0) return `No tomó la salida en ${p.dns} carrera(s)`;
-  if (p.dsq > 0) return `Descalificado en ${p.dsq} carrera(s)`;
+  if (p.dns > 0) return `No tomó la salida en ${plural(p.dns, "carrera", "carreras")}`;
+  if (p.dsq > 0) return `Descalificado en ${plural(p.dsq, "carrera", "carreras")}`;
   return "Sin detalle carrera a carrera";
 }
 

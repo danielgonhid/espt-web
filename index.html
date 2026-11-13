@@ -4,7 +4,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Clasificación histórica — ESPT Competizione</title>
-  <meta name="description" content="Estadísticas históricas de todos los pilotos de la liga ESPT Competizione.">
+  <meta name="description" content="Estadísticas históricas de todos los pilotos de ESPT Competizione, liga privada de simracing en Assetto Corsa: carreras, títulos, victorias, podios y poles.">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#08080a">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="ESPT Competizione">
+  <meta property="og:title" content="Clasificación histórica — ESPT Competizione">
+  <meta property="og:description" content="Estadísticas históricas de todos los pilotos de ESPT Competizione, liga privada de simracing en Assetto Corsa: carreras, títulos, victorias, podios y poles.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+  <!-- Fuentes. Barlow es la de lectura; Accelerator, solo rótulos (ver css/tokens.css).
+       Si el CDN no responde, la web se ve con la sans-serif del sistema. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&amp;family=Barlow+Condensed:wght@500;600;700&amp;display=swap">
+  <link rel="stylesheet" href="https://db.onlinewebfonts.com/c/f375fe11d4f432f1d0b9e127684bbad4?family=Accelerator+W01">
 
   <link rel="stylesheet" href="css/tokens.css">
   <link rel="stylesheet" href="css/base.css">
@@ -18,9 +32,11 @@
 </head>
 <body>
 
+  <a class="salto" href="#contenido">Saltar al contenido</a>
+
   <header class="cabecera" id="cabecera"></header>
 
-  <main class="principal">
+  <main class="principal" id="contenido" tabindex="-1">
     <div class="contenedor">
 
       <noscript>
@@ -29,44 +45,53 @@
 
       <h1 class="titulo-vista">Histórico de la liga</h1>
       <p class="subtitulo-vista">
-        Todo lo que ha pasado en ESPT desde el primer campeonato. Ordena por cualquier
-        columna pulsando su cabecera y busca por nombre o mote.
+        Las cifras de todos los pilotos que han corrido en ESPT, liga privada de simracing
+        en Assetto Corsa, desde el primer campeonato.
       </p>
 
       <section class="tira" id="tira-totales" aria-label="Totales de la liga"></section>
 
-      <section aria-labelledby="titulo-records">
-        <h2 class="titulo-seccion" id="titulo-records">Récords y estadísticas destacadas</h2>
+      <section class="bloque" aria-labelledby="titulo-records">
+        <h2 class="titulo-seccion" id="titulo-records">Récords de la liga</h2>
         <div class="highlights-grid" id="highlights">
           <p class="cargando">Calculando récords…</p>
         </div>
       </section>
 
-      <div class="controles">
-        <div class="campo">
-          <label class="campo__etiqueta" for="buscador">Buscar piloto</label>
-          <input class="entrada" id="buscador" type="search" autocomplete="off"
-                 placeholder="Nombre o mote…">
-        </div>
-        <span class="recuento" id="recuento">Cargando…</span>
-      </div>
+      <section class="bloque" aria-labelledby="titulo-tabla">
+        <h2 class="titulo-seccion" id="titulo-tabla">Clasificación histórica</h2>
 
-      <div id="zona-tabla">
-        <div class="table-responsive">
-          <table class="tabla" id="tabla-pilotos">
-            <caption class="oculto">Clasificación histórica de pilotos</caption>
-            <thead><tr id="cabecera-tabla"></tr></thead>
-            <tbody id="cuerpo-tabla">
-              <tr><td class="cargando" colspan="14">Cargando datos…</td></tr>
-            </tbody>
-          </table>
+        <div class="controles">
+          <div class="campo campo--corto">
+            <label class="etiqueta" for="buscador">Buscar piloto</label>
+            <input class="entrada" id="buscador" name="q" type="search" autocomplete="off"
+                   spellcheck="false" placeholder="Nombre o mote…">
+          </div>
+          <!-- aria-live: un lector de pantalla anuncia cuántos quedan al filtrar -->
+          <span class="recuento" id="recuento" role="status" aria-live="polite">Cargando…</span>
         </div>
-      </div>
 
-      <p class="nota">
-        Los podios incluyen las victorias. Un asterisco en la posición media indica
-        que es un valor estimado: el CSV de origen no trae esa columna.
-      </p>
+        <div id="zona-tabla">
+          <div class="table-responsive" tabindex="0" role="region" aria-labelledby="titulo-tabla">
+            <table class="tabla" id="tabla-pilotos">
+              <caption class="solo-lector">
+                Clasificación histórica de pilotos. Las cabeceras ordenan la tabla.
+              </caption>
+              <thead><tr id="cabecera-tabla"></tr></thead>
+              <tbody id="cuerpo-tabla">
+                <tr><td class="cargando" colspan="14">Cargando datos…</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <p class="nota">
+          Pulsa una cabecera para ordenar por esa columna. Los podios incluyen las victorias.
+          VMR son vueltas rápidas; DNF, abandonos; DSQ, descalificaciones.
+          Un asterisco en la posición media indica que es un valor estimado:
+          los datos de origen no traen esa columna.
+        </p>
+      </section>
 
     </div>
   </main>

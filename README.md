@@ -15,14 +15,16 @@ Sin frameworks, sin backend y sin paso de compilación.
   y con buscador. Incluye totales de la liga y una sección de récords (más títulos, más
   experiencia, mejor posición media…) calculados al vuelo, con soporte para empates.
 - **Perfil de piloto.** Ficha individual con sus cifras, ratios y un gráfico hexagonal que
-  compara su rendimiento con el mejor registro de la liga en seis ejes.
-- **Cara a cara.** Comparador de dos pilotos métrica a métrica, con el ganador de cada una
-  resaltado y los dos perfiles superpuestos en el gráfico. También calcula el duelo más
+  compara su rendimiento con el mejor registro de la liga en seis ejes. Sin piloto elegido
+  (`perfil.html` a secas) muestra el directorio con todos los pilotos.
+- **Cara a cara.** Comparador de dos pilotos métrica a métrica, con un marcador de métricas
+  ganadas, el ganador de cada una resaltado y los dos perfiles superpuestos en el gráfico. También calcula el duelo más
   igualado de la liga: la pareja de pilotos cuyos perfiles estadísticos están más cerca
   (distancia euclídea sobre cinco ratios normalizados).
 
-La navegación entre páginas pasa el estado por la URL (`perfil.html?piloto=Marc`,
-`cara-a-cara.html?a=Marc&b=Dani`), así que cualquier vista se puede compartir con un enlace.
+Todo el estado va en la URL (`perfil.html?piloto=Marc`, `cara-a-cara.html?a=Marc&b=Dani`,
+`index.html?q=mar&orden=victorias`) y se actualiza al cambiar un desplegable, ordenar la
+tabla o buscar, así que cualquier vista se puede compartir copiando la dirección.
 
 ## Decisiones técnicas
 
@@ -35,6 +37,22 @@ necesita servidor ni base de datos.
 como variables en `css/tokens.css`. Los tonos derivados (brillos, fondos translúcidos) se
 calculan con `color-mix()` a partir del color base, y los gráficos leen esas mismas
 variables en tiempo de ejecución. Cambiar el color de la liga es cambiar una línea.
+
+**Tres fuentes, tres papeles.** Accelerator W01 es una fuente de rótulo y solo se usa en
+grande: el logo, los títulos de página, los nombres de piloto y las cifras destacadas. Lo
+que se lee (tablas, párrafos, formularios) va en Barlow, y los títulos de sección, el menú
+y los botones en Barlow Condensed.
+
+**Hoja de resultados, no panel de tarjetas.** Los datos se separan con líneas finas y
+esquinas rectas, sin cajas redondeadas: totales en una banda, récords y directorio de
+pilotos como listas con renglones. Las cifras
+se formatean en español con `Intl.NumberFormat` (coma decimal: `18,3 %`).
+
+**Accesible por defecto.** Contraste de texto por encima de 4.5:1, enlace para saltar la
+cabecera, cabeceras de tabla que son botones de verdad (se ordena con el teclado), objetivos
+táctiles de al menos 44 px y animaciones que se apagan con `prefers-reduced-motion`. En el
+cara a cara cada piloto tiene su color (rojo y azul, distinguibles con daltonismo) y quién
+gana una métrica se marca con el peso de la cifra, no solo con color.
 
 **Los fallos no se propagan.** Cada página carga solo su propio módulo, la cabecera va en
 un módulo aparte y cada sección se pinta aislada: si una lanza un error (incluso de
@@ -56,9 +74,10 @@ tamaño cero.
 ├── index.html               Clasificación
 ├── perfil.html              Ficha individual
 ├── cara-a-cara.html         Comparador
+├── favicon.svg              Icono de la pestaña
 ├── data/data.json           Fuente única de datos
 ├── css/
-│   ├── tokens.css           Colores, fuente, tamaños, espaciado
+│   ├── tokens.css           Colores, fuentes, tamaños, espaciado
 │   ├── base.css             Reset y estructura común
 │   ├── layout.css           Cabecera y pie
 │   ├── components.css       Piezas compartidas
@@ -75,6 +94,9 @@ tamaño cero.
 | Quiero cambiar…                          | Archivo |
 |------------------------------------------|---------|
 | Un color, la fuente, un tamaño           | `css/tokens.css` (gráficos incluidos) |
+| Qué fuentes se descargan                 | los `<link>` del `<head>` de los tres HTML |
+| El color del piloto B en el cara a cara  | `--c-rival` en `css/tokens.css` |
+| El pie de página                         | `pintarPie()` en `js/core/layout.js` |
 | El logo o el menú                        | `js/core/layout.js`, `ENLACES_NAV` en `js/core/config.js` |
 | Mínimos de carreras y otras constantes   | `js/core/config.js` |
 | Un récord de la portada                  | `js/modulos/records.js` |
@@ -102,7 +124,9 @@ módulos ES, y la web se queda vacía. Sírvela por HTTP, por ejemplo con la ext
 - Los datos históricos vienen de la hoja de estadísticas de la liga, convertida a JSON.
 - Los podios incluyen las victorias.
 - La posición media se estima (y se marca con `*`) mientras el origen no traiga esa columna.
-- La tipografía Accelerator W01 se carga por CDN; sin conexión se usa la sans-serif del sistema.
+- Las tipografías (Accelerator W01, Barlow y Barlow Condensed) se cargan por CDN; sin
+  conexión se usa la sans-serif del sistema.
+- La fecha del pie sale de `meta.generado` en `data.json`: hay que actualizarla al cambiar los datos.
 
 ## Autoría
 

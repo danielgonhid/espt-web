@@ -8,73 +8,85 @@
   position: sticky;
   top: 0;
   z-index: 20;
-  background: linear-gradient(180deg, var(--c-pista) 0%, var(--c-asfalto) 100%);
+  background: color-mix(in srgb, var(--c-pista) 92%, transparent);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--c-linea);
 }
 
 /* Reserva el alto mientras layout.js pinta la cabecera:
    evita que la página dé un salto al cargar. */
-.cabecera:empty { min-height: 77px; }
+.cabecera:empty { min-height: calc(var(--alto-cabecera) + 1px); }
 
 .cabecera__fila {
   display: flex;
-  align-items: center;
+  align-items: stretch;
   justify-content: space-between;
   gap: var(--e-4);
-  min-height: 76px;
-  flex-wrap: wrap;
-  padding: var(--e-2) var(--e-3);
+  min-height: var(--alto-cabecera);
 }
 
 /* ---------- Logo ---------- */
 .logo {
   display: inline-flex;
   align-items: baseline;
+  align-self: center;
   gap: var(--e-2);
+  font-family: var(--f-display);
   line-height: 1;
   color: var(--c-texto);
 }
 .logo:hover { text-decoration: none; }
 
 .logo__espt {
-  font-size: var(--t-2xl);
+  font-size: 2rem;
   color: var(--c-rojo);
   letter-spacing: -0.02em;
-  text-shadow: 0 0 24px var(--c-rojo-glow);
+  transition: text-shadow var(--t-rapido) var(--curva);
 }
+.logo:hover .logo__espt { text-shadow: 0 0 22px var(--c-rojo-glow); }
 
 .logo__competizione {
-  font-size: var(--t-lg);
-  color: var(--c-texto);
+  font-size: 1rem;
   letter-spacing: 0.04em;
 }
 
 /* ---------- Navegación ---------- */
-.nav {
-  display: flex;
-  gap: var(--e-1);
-  flex-wrap: wrap;
-}
+.nav { display: flex; }
 
 .nav__enlace {
-  display: inline-block;
-  padding: var(--e-2) var(--e-3);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 var(--e-3);
   color: var(--c-texto-2);
-  border: 1px solid transparent;
-  border-radius: var(--radio);
-  font-size: var(--t-sm);
+  font-family: var(--f-dato);
+  font-size: var(--t-md);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: color var(--t-rapido) var(--curva);
 }
-.nav__enlace:hover {
-  color: var(--c-texto);
-  border-color: var(--c-linea);
-  background: var(--c-asfalto-alto);
-  text-decoration: none;
+
+/* Subrayado que se dibuja desde la izquierda al pasar el ratón
+   y se queda fijo en la página actual. */
+.nav__enlace::after {
+  content: "";
+  position: absolute;
+  left: var(--e-3);
+  right: var(--e-3);
+  bottom: -1px;
+  height: 3px;
+  background: var(--c-rojo);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--t-rapido) var(--curva);
 }
-.nav__enlace[aria-current="page"] {
-  color: var(--c-texto);
-  border-color: var(--c-rojo);
-  background: var(--c-rojo-suave);
-}
+.nav__enlace:hover { color: var(--c-texto); text-decoration: none; }
+.nav__enlace:hover::after,
+.nav__enlace[aria-current="page"]::after { transform: scaleX(1); }
+.nav__enlace[aria-current="page"] { color: var(--c-texto); }
 
 /* ---------- Pie ---------- */
 .pie {
@@ -84,6 +96,33 @@
   font-size: var(--t-xs);
 }
 
-@media (max-width: 560px) {
-  .cabecera__fila { min-height: 0; }
+.pie__fila {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--e-2) var(--e-4);
+}
+.pie__fila p { margin: 0; }
+
+/* ---------- Móvil: logo arriba, menú debajo a todo el ancho ---------- */
+@media (max-width: 640px) {
+  .cabecera__fila {
+    flex-direction: column;
+    gap: 0;
+    padding-top: var(--e-3);
+  }
+  .logo { align-self: flex-start; }
+  .logo__espt { font-size: 1.75rem; }
+  .logo__competizione { font-size: 0.875rem; }
+
+  /* Sale hasta los bordes de la pantalla para que los tres enlaces repartan el ancho. */
+  .nav { margin: var(--e-2) calc(-1 * var(--margen)) 0; }
+  .nav__enlace {
+    flex: 1 1 0;
+    justify-content: center;
+    min-height: 48px;
+    padding: 0 var(--e-1);
+    font-size: var(--t-sm);
+  }
+  .nav__enlace::after { left: var(--e-2); right: var(--e-2); }
 }

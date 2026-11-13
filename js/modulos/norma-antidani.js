@@ -35,7 +35,7 @@ export function htmlNormaAntiDani(piloto) {
 
   return `
     <aside class="norma-antidani" role="note">
-      <p class="norma-antidani__etiqueta">Norma anti-Dani</p>
+      <p class="norma-antidani__etiqueta etiqueta">Norma anti-Dani</p>
       <p class="norma-antidani__texto">
         Desde la Season 8, ${esc(piloto.nombre)} sigue sumando victorias,
         poles y vueltas rápidas en pista —de hecho ya lleva ${partes}—

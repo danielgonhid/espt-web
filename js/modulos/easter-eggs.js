@@ -18,7 +18,7 @@ export function htmlEasterEgg(piloto, easterEggs = {}) {
   if (!huevo || !huevo.titulo) return "";
   return `
     <aside class="easter-egg" role="note">
-      <p class="easter-egg__etiqueta">Easter egg</p>
+      <p class="easter-egg__etiqueta etiqueta">Easter egg</p>
       <p class="easter-egg__titulo">${esc(huevo.titulo)}</p>
       ${huevo.texto ? `<p class="easter-egg__texto">${esc(huevo.texto)}</p>` : ""}
     </aside>`;

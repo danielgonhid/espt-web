@@ -24,7 +24,7 @@ const token = (variable) =>
 // Funciones y no constantes: se leen en el momento de dibujar.
 const TEMA = {
   rojo:   () => token("--c-rojo"),
-  verde:  () => token("--c-verde"),
+  rival:  () => token("--c-rival"),
   texto:  () => token("--c-texto"),
   texto2: () => token("--c-texto-2"),
   linea:  () => token("--c-linea"),
@@ -50,6 +50,19 @@ function conAlpha(color, alpha) {
 }
 
 /* ---------- Guardas ---------- */
+
+/**
+ * Espera a que las fuentes web estén cargadas (con un tope de 1,5 s).
+ * Un canvas no se repinta solo cuando llega la fuente: si se dibuja antes,
+ * las etiquetas se quedan para siempre con la fuente de reserva.
+ */
+function fuentesListas() {
+  if (!document.fonts?.ready) return Promise.resolve();
+  return Promise.race([
+    document.fonts.ready,
+    new Promise((resolve) => setTimeout(resolve, 1500))
+  ]);
+}
 
 /** ¿Está Chart.js cargado? Si el CDN falla, se lanza un error que recoge seccion(). */
 function exigirChartJs() {
@@ -126,7 +139,9 @@ function escalaPosicion(piloto, max) {
 const escalaDNF = (piloto, max) =>
   max.dnf > 0 ? Math.max(0, 100 - (piloto.dnf / max.dnf) * 100) : 100;
 
-export const EJES = ["Participación", "Posición media", "Fiabilidad (DNF)", "Poles", "Podios", "Victorias"];
+// Una etiqueta escrita como lista sale en varias líneas: así las largas no se
+// cortan contra el borde del gráfico en pantallas estrechas.
+export const EJES = ["Participación", ["Posición", "media"], ["Fiabilidad", "(DNF)"], "Poles", "Podios", "Victorias"];
 
 export function valoresRadar(piloto, max) {
   return [
@@ -145,26 +160,29 @@ function opcionesRadar(numPilotos) {
     responsive: true,
     maintainAspectRatio: false,
     animation: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? false : { duration: 450 },
+    layout: { padding: 4 },
     scales: {
       r: {
         min: 0,
         max: 100,
         angleLines: { color: TEMA.linea() },
         grid: { color: TEMA.linea() },
-        pointLabels: { color: TEMA.texto(), font: { size: 13 } },
+        pointLabels: { color: TEMA.texto(), font: { size: 13, weight: 500 } },
         ticks: {
           display: true,
           stepSize: 25,
+          // El 100 cae justo en el borde, encima de los puntos: se deja sin número.
+          callback: (valor) => (valor >= 100 ? "" : valor),
           color: TEMA.texto2(),
           backdropColor: "transparent",
-          font: { size: 10 }
+          font: { size: 11 }
         }
       }
     },
     plugins: {
       legend: {
         display: numPilotos > 1,
-        labels: { color: TEMA.texto() }
+        labels: { color: TEMA.texto(), usePointStyle: true, pointStyle: "rectRounded", padding: 16, font: { size: 14 } }
       },
       tooltip: {
         backgroundColor: TEMA.fondo(),
@@ -173,6 +191,8 @@ function opcionesRadar(numPilotos) {
         titleColor: TEMA.texto(),
         bodyColor: TEMA.texto2(),
         callbacks: {
+          // Las etiquetas de varias líneas se juntan en una para el título del tooltip.
+          title: (items) => [].concat(items[0].chart.data.labels[items[0].dataIndex]).join(" "),
           label: (ctx) => `${ctx.dataset.label}: ${ctx.raw.toFixed(0)} / 100`
         }
       }
@@ -200,7 +220,8 @@ function dibujar(canvas, config) {
 /* ---------- API ---------- */
 
 /** Hexágono de un solo piloto (perfil.html). */
-export function radarPiloto(idCanvas, piloto, max) {
+export async function radarPiloto(idCanvas, piloto, max) {
+  await fuentesListas();
   exigirChartJs();
   const canvas = obtenerCanvas(idCanvas);
   destruirPrevio(canvas);
@@ -222,7 +243,8 @@ export function radarPiloto(idCanvas, piloto, max) {
 }
 
 /** Hexágono con dos pilotos superpuestos (cara-a-cara.html). */
-export function radarComparativo(idCanvas, a, b, max) {
+export async function radarComparativo(idCanvas, a, b, max) {
+  await fuentesListas();
   exigirChartJs();
   const canvas = obtenerCanvas(idCanvas);
   destruirPrevio(canvas);
@@ -234,7 +256,7 @@ export function radarComparativo(idCanvas, a, b, max) {
         labels: EJES,
         datasets: [
           datasetPiloto(a, max, TEMA.rojo(), 0.18, { pointRadius: 3 }),
-          datasetPiloto(b, max, TEMA.verde(), 0.14, { pointRadius: 3 })
+          datasetPiloto(b, max, TEMA.rival(), 0.14, { pointRadius: 3 })
         ]
       },
       options: opcionesRadar(2)
